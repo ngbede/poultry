@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:poultry/provider/user_prov.dart';
 import 'package:poultry/signup.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -11,14 +13,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // primarySwatch: Colors.blue,
-
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserProv>(
+          create: (_) => UserProv(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: Signup(),
       ),
-      home: Signup(),
     );
   }
 }

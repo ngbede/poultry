@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poultry/config/fieldtype.dart';
 import 'package:poultry/login.dart';
+import 'package:poultry/provider/user_prov.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -9,15 +11,14 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
+  final _signupFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _formkey,
+          key: _signupFormKey,
+          autovalidateMode: AutovalidateMode.disabled,
           child: ListView(
             children: [
               Padding(
@@ -33,12 +34,13 @@ class _SignupState extends State<Signup> {
               InputField(
                 name: "First name",
                 keyboard: TextInputType.text,
-                fieldType: FieldType.name,
+                fieldType: FieldType.firstName,
+                //onSaved: ,
               ),
               InputField(
                 name: "Last name",
                 keyboard: TextInputType.text,
-                fieldType: FieldType.name,
+                fieldType: FieldType.lastName,
               ),
               InputField(
                 name: "Email address",
@@ -56,16 +58,22 @@ class _SignupState extends State<Signup> {
                 keyboard: TextInputType.visiblePassword,
                 fieldType: FieldType.password,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: Card(
-                  color: Colors.green[400],
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(color: Colors.white),
-                      textAlign: TextAlign.center,
+              GestureDetector(
+                onTap: () {
+                  _signupFormKey.currentState.validate();
+                  //Provider.of<UserProv>(context, listen: false).getInfo();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Card(
+                    color: Colors.green[400],
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        "Sign up",
+                        style: TextStyle(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
@@ -103,6 +111,9 @@ class _SignupState extends State<Signup> {
                     ),
                   )
                 ],
+              ),
+              SizedBox(
+                height: 10,
               ),
             ],
           ),
