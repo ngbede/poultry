@@ -104,6 +104,9 @@ class _InputFieldState extends State<InputField> {
               } else if (FieldType.phone == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setPhoneNumber(value);
+              } else if (FieldType.password == widget.fieldType) {
+                Provider.of<UserProv>(context, listen: false)
+                    .setPassword(value);
               }
             },
             maxLength: FieldType.phone == widget.fieldType ? 11 : null,

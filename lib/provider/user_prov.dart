@@ -23,10 +23,16 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void setPassword(String password) {
+    _user.password = password;
+    notifyListeners();
+  }
+
   String get firstName => _user.firstName;
   String get lastname => _user.lastName;
   String get email => _user.email;
   String get phoneNumber => _user.phoneNumber;
+  String get password => _user.password;
 
   void getInfo() {
     print(_user.toString());

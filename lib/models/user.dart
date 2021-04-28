@@ -3,8 +3,15 @@ class User {
   String lastName;
   String email;
   String phoneNumber;
+  String password;
 
-  User({this.firstName, this.lastName, this.email, this.phoneNumber});
+  User({
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phoneNumber,
+    this.password,
+  });
 
   @override
   String toString() {
