@@ -2,11 +2,9 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:poultry/config/fieldtype.dart';
-import 'package:poultry/models/user.dart';
 import 'package:poultry/provider/user_prov.dart';
 import 'package:provider/provider.dart';
 
-// TODO: fix autochecking of fields
 class InputField extends StatefulWidget {
   final String name;
   final TextInputType keyboard;
@@ -94,7 +92,7 @@ class _InputFieldState extends State<InputField> {
             controller: _controller,
             validator: _validatorMsg[widget.fieldType],
             onChanged: (value) {
-              Provider.of<UserProv>(context, listen: false).getInfo();
+              //Provider.of<UserProv>(context, listen: false).getInfo();
               if (FieldType.firstName == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setFirstName(value);
@@ -107,7 +105,7 @@ class _InputFieldState extends State<InputField> {
                 Provider.of<UserProv>(context, listen: false)
                     .setPhoneNumber(value);
               }
-            }, // use on saved prop to trigger submission to firebase
+            },
             maxLength: FieldType.phone == widget.fieldType ? 11 : null,
             obscureText: widget.iconVisible ? _hidePassword : false,
             keyboardType: widget.keyboard,

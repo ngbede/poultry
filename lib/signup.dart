@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poultry/config/fieldtype.dart';
 import 'package:poultry/login.dart';
 import 'package:poultry/provider/user_prov.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _signupFormKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,10 +62,37 @@ class _SignupState extends State<Signup> {
                 keyboard: TextInputType.visiblePassword,
                 fieldType: FieldType.password,
               ),
+              // TODO: add spinner to button to indicate loading
               GestureDetector(
-                onTap: () {
-                  _signupFormKey.currentState.validate();
-                  //Provider.of<UserProv>(context, listen: false).getInfo();
+                onTap: () async {
+                  print("${_signupFormKey.currentState.validate()}");
+                  if (_signupFormKey.currentState.validate()) {
+                    print("valid shit");
+                    try {
+                      final UserCredential _user =
+                          await _auth.createUserWithEmailAndPassword(
+                        email:
+                            Provider.of<UserProv>(context, listen: false).email,
+                        password: Provider.of<UserProv>(context, listen: false)
+                            .firstName,
+                      );
+                      if (_user != null) {
+                        print("Signup successful");
+                        //TODO: Implement Firestore storage here and navigate to further onboarding for farm details
+                      }
+                    } catch (e) {
+                      print(e);
+                      Fluttertoast.showToast(
+                        msg: "${e.code}",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.teal,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
