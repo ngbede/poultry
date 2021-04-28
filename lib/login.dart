@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/fieldtype.dart';
+import 'package:poultry/provider/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,6 +14,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   GlobalKey<FormState> _signinFormkey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,12 +49,37 @@ class _LoginState extends State<Login> {
               ),
               InputField(
                 name: "Password",
-                keyboard: TextInputType.text,
+                keyboard: TextInputType.visiblePassword,
+                iconVisible: true,
                 fieldType: FieldType.password,
               ),
               GestureDetector(
-                onTap: () {
-                  _signinFormkey.currentState.validate();
+                onTap: () async {
+                  if (_signinFormkey.currentState.validate()) {
+                    try {
+                      final UserCredential _user =
+                          await _auth.signInWithEmailAndPassword(
+                        email:
+                            Provider.of<UserProv>(context, listen: false).email,
+                        password: Provider.of<UserProv>(context, listen: false)
+                            .password,
+                      );
+                      if (_user != null) {
+                        // TODO: navigate to app menu
+                        print("Sign in successful");
+                      }
+                    } catch (e) {
+                      Fluttertoast.showToast(
+                        msg: "${e.code}",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.teal,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+                  }
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),

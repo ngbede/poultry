@@ -74,14 +74,13 @@ class _SignupState extends State<Signup> {
                         email:
                             Provider.of<UserProv>(context, listen: false).email,
                         password: Provider.of<UserProv>(context, listen: false)
-                            .firstName,
+                            .password,
                       );
                       if (_user != null) {
                         print("Signup successful");
                         //TODO: Implement Firestore storage here and navigate to further onboarding for farm details
                       }
                     } catch (e) {
-                      print(e);
                       Fluttertoast.showToast(
                         msg: "${e.code}",
                         toastLength: Toast.LENGTH_SHORT,
