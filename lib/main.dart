@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:poultry/config/firebase.dart';
 import 'package:poultry/provider/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +9,20 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // The below lines are only useful for local dev purposes
+  // Comment them out when using production backend
+  store.settings = Settings(
+    host: storeHost,
+    sslEnabled: false,
+    persistenceEnabled: true,
+  );
+  await auth.useEmulator(authHost);
   runApp(
     MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
