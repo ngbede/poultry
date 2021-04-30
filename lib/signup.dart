@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:poultry/config/fieldtype.dart';
+import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/firebase.dart';
 import 'package:poultry/login.dart';
 import 'package:poultry/provider/user_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:poultry/widgets/user_role_button.dart';
 import 'package:provider/provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -15,7 +17,11 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _signupFormKey = GlobalKey<FormState>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Map<UserType, String> _roleStr = {
+    UserType.farmer: "farmer",
+    UserType.distributor: "distributor"
+  };
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,6 +62,27 @@ class _SignupState extends State<Signup> {
                 keyboard: TextInputType.phone,
                 fieldType: FieldType.phone,
               ),
+              Padding(
+                padding: EdgeInsets.only(left: 20),
+                child: Text(
+                  "User Role",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                  //textAlign: TextAlign.left,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  UserRole(
+                    name: "Farmer",
+                    valueProp: UserType.farmer,
+                  ),
+                  UserRole(
+                    name: "Distributor",
+                    valueProp: UserType.distributor,
+                  ),
+                ],
+              ),
               InputField(
                 name: "Password",
                 iconVisible: true,
@@ -67,18 +94,43 @@ class _SignupState extends State<Signup> {
                 onTap: () async {
                   print("${_signupFormKey.currentState.validate()}");
                   if (_signupFormKey.currentState.validate()) {
-                    print("valid shit");
                     try {
                       final UserCredential _user =
-                          await _auth.createUserWithEmailAndPassword(
+                          await auth.createUserWithEmailAndPassword(
                         email:
                             Provider.of<UserProv>(context, listen: false).email,
                         password: Provider.of<UserProv>(context, listen: false)
                             .password,
                       );
                       if (_user != null) {
+                        await store
+                            .collection("users")
+                            .doc(auth.currentUser.uid)
+                            .set(
+                          {
+                            "email": Provider.of<UserProv>(
+                              context,
+                              listen: false,
+                            ).email,
+                            "userId": _user.user.uid,
+                            "firstName": Provider.of<UserProv>(
+                              context,
+                              listen: false,
+                            ).firstName,
+                            "lastName": Provider.of<UserProv>(
+                              context,
+                              listen: false,
+                            ).lastname,
+                            "userRole": _roleStr[
+                                Provider.of<UserProv>(context, listen: false)
+                                    .role],
+                            "phoneNumber": Provider.of<UserProv>(
+                              context,
+                              listen: false,
+                            ).phoneNumber,
+                          },
+                        );
                         print("Signup successful");
-                        //TODO: Implement Firestore storage here and navigate to further onboarding for farm details
                       }
                     } catch (e) {
                       Fluttertoast.showToast(

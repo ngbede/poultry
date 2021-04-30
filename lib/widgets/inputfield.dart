@@ -1,7 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:poultry/config/fieldtype.dart';
+import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/provider/user_prov.dart';
 import 'package:provider/provider.dart';
 

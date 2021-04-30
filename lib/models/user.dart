@@ -1,8 +1,11 @@
+import 'package:poultry/config/enumvals.dart';
+
 class User {
   String firstName;
   String lastName;
   String email;
   String phoneNumber;
+  UserType role = UserType.distributor;
   String password;
 
   User({
@@ -10,6 +13,7 @@ class User {
     this.lastName,
     this.email,
     this.phoneNumber,
+    this.role,
     this.password,
   });
 

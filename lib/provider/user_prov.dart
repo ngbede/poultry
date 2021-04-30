@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/models/user.dart';
 
 class UserProv with ChangeNotifier {
@@ -28,10 +29,16 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void setUserRole(UserType role) {
+    _user.role = role;
+    notifyListeners();
+  }
+
   String get firstName => _user.firstName;
   String get lastname => _user.lastName;
   String get email => _user.email;
   String get phoneNumber => _user.phoneNumber;
+  UserType get role => _user.role;
   String get password => _user.password;
 
   void getInfo() {
