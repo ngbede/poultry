@@ -20,6 +20,7 @@ dependencies:
   cloud_firestore: ^1.0.6
   provider: ^5.0.0
   fluttertoast: ^8.0.6
+  flutter_progress_hud: ^2.0.0
 
 dev_dependencies:
   flutter_test:
