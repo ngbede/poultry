@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
-import 'package:poultry/provider/user_prov.dart';
+import 'package:poultry/providers/farm_prov.dart';
+import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<UserProv>(
           create: (_) => UserProv(),
+        ),
+        ChangeNotifierProvider<FarmProv>(
+          create: (_) => FarmProv(),
         ),
       ],
       child: MaterialApp(
