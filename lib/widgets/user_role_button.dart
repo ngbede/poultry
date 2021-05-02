@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/provider/user_prov.dart';
+import 'package:poultry/providers/user_prov.dart';
 import 'package:provider/provider.dart';
 
 class UserRole extends StatelessWidget {
