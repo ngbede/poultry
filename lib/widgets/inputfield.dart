@@ -1,8 +1,10 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
+import 'package:flutter/services.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/provider/user_prov.dart';
+import 'package:poultry/config/validatormsgs.dart';
+import 'package:poultry/providers/farm_prov.dart';
+import 'package:poultry/providers/user_prov.dart';
 import 'package:provider/provider.dart';
 
 class InputField extends StatefulWidget {
@@ -26,35 +28,6 @@ class InputField extends StatefulWidget {
 }
 
 bool _hidePassword = true;
-Map<FieldType, MultiValidator> _validatorMsg = {
-  FieldType.email: MultiValidator(
-    [
-      RequiredValidator(errorText: "email is a required field"),
-      EmailValidator(errorText: "invalid email"),
-    ],
-  ),
-  FieldType.password: MultiValidator(
-    [
-      RequiredValidator(errorText: "password is a required field"),
-      MinLengthValidator(6,
-          errorText: "password must be at least 6 digits long"),
-    ],
-  ),
-  FieldType.phone: MultiValidator(
-    [
-      RequiredValidator(errorText: "phone number is a required field"),
-      MinLengthValidator(11, errorText: "phone number must be 11 digits long"),
-    ],
-  ),
-  FieldType.firstName: MultiValidator(
-    [
-      RequiredValidator(errorText: "first name is a required field"),
-    ],
-  ),
-  FieldType.lastName: MultiValidator([
-    RequiredValidator(errorText: "last name is a required field"),
-  ]),
-};
 
 class _InputFieldState extends State<InputField> {
   TextEditingController _controller;
@@ -90,7 +63,7 @@ class _InputFieldState extends State<InputField> {
               const EdgeInsets.only(left: 20.0, right: 20, top: 5, bottom: 20),
           child: TextFormField(
             controller: _controller,
-            validator: _validatorMsg[widget.fieldType],
+            validator: validatorMsg[widget.fieldType],
             onChanged: (value) {
               //Provider.of<UserProv>(context, listen: false).getInfo();
               if (FieldType.firstName == widget.fieldType) {
@@ -107,12 +80,32 @@ class _InputFieldState extends State<InputField> {
               } else if (FieldType.password == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setPassword(value);
+              } else if (FieldType.farmName == widget.fieldType) {
+                Provider.of<FarmProv>(context, listen: false)
+                    .serFarmName(value);
+              } else if (FieldType.address == widget.fieldType) {
+                Provider.of<FarmProv>(context, listen: false).setAddress(value);
+              } else if (FieldType.numberOfBroilers == widget.fieldType) {
+                Provider.of<FarmProv>(context, listen: false).setBroilerCount(
+                  value,
+                );
+              } else if (FieldType.numberOfLayers == widget.fieldType) {
+                Provider.of<FarmProv>(context, listen: false).setLayerCount(
+                  value,
+                );
+              } else if (FieldType.lga == widget.fieldType) {
+                Provider.of<FarmProv>(context, listen: false).setLGA(
+                  value,
+                );
               }
             },
-            maxLength: FieldType.phone == widget.fieldType ? 11 : null,
+            maxLength: widget.maxlen,
             obscureText: widget.iconVisible ? _hidePassword : false,
             keyboardType: widget.keyboard,
             cursorColor: Colors.green,
+            inputFormatters: (TextInputType.number == widget.keyboard)
+                ? [FilteringTextInputFormatter.digitsOnly]
+                : null,
             decoration: InputDecoration(
               border: InputBorder.none,
               labelStyle: TextStyle(
