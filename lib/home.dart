@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
     "images/icons8-chicken-100.png",
     "images/icons8-egg-100.png"
   ];
-  final List<dynamic> _cardValues = [100000000, "423", "30"];
+  final List<dynamic> _cardValues = [100000, "423", "30"];
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundColor: Color(0XFFEED9FC),
+                  backgroundColor: Color(0XFF35D4C0),
                   child: Icon(
                     Icons.person,
                     color: Colors.white,
@@ -156,15 +156,33 @@ class Home extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.teal[100],
+                        color: Color(0XFFEFF4F5),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10),
                         ),
                       ),
-                      height: 150,
+                      height: 200,
                       padding: EdgeInsets.all(8),
-                      child: Text("He'd have you all unravel at the"),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            "images/icons8-farm-house-100.png",
+                            scale: 2.5,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "Stock Count",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text("Keep stock of items in your farm"),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -173,16 +191,34 @@ class Home extends StatelessWidget {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.teal[100],
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                        color: Color(0XFFEFF4F5),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            10,
+                          ),
                         ),
                       ),
-                      height: 150,
+                      height: 200,
                       padding: EdgeInsets.all(8),
-                      child: Text("He'd have you all unravel at the"),
-                      // color: Colors.teal[100],
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            "images/icons8-truck-100.png",
+                            scale: 2.5,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            "Open Orders",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text("Fulfill all open orders from distributors"),
+                        ],
+                      ),
                     ),
                   ),
                 ],
