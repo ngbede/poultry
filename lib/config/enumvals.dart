@@ -14,3 +14,5 @@ enum FieldType {
 }
 
 enum UserType { farmer, distributor }
+
+enum OrderStatus { open, closed }
