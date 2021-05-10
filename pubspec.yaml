@@ -29,7 +29,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.1.8+4
 
+flutter_native_splash:
+  color: "#35D4C0"
+  image: images/splash-screen.png
+  android: true
+  ios: true
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
