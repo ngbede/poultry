@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:intl/intl.dart';
+import 'package:poultry/providers/layout_index.dart';
+import 'package:provider/provider.dart';
 
+// TODO: refactor home screen code
 class Home extends StatelessWidget {
-  final List<Color> _customColors = [
-    Color(0XFF0D2C54),
-    Color(0XFF0D2C54), //(0XFF009444),
-    Color(0XFF0D2C54), //(0XFF888BB2),
-  ];
   final _formatCurrency = NumberFormat.simpleCurrency(name: "₦");
   final List<String> _cardTitles = [
     "Total Sales",
     "Total Chickens",
-    "Crates of Eggs"
+    "Eggs Collected"
   ];
   final List<String> _cardImages = [
     "images/icons8-total-sales-100.png",
@@ -41,11 +39,13 @@ class Home extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                Text(
-                  "Hello Emmanuel",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    "Destiny Poultry Farm",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -60,7 +60,7 @@ class Home extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: _customColors[index],
+                    color: Color(0XFF0D2C54),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Padding(
@@ -154,34 +154,40 @@ class Home extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0XFFEFF4F5),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
+                    child: GestureDetector(
+                      onTap: () {
+                        Provider.of<LayoutIndexProv>(context, listen: false)
+                            .onTapChangeScreen(1);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0XFFEFF4F5),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
                         ),
-                      ),
-                      height: 200,
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "images/icons8-farm-house-100.png",
-                            scale: 2.5,
-                            color: Colors.black,
-                          ),
-                          Text(
-                            "Stock Count",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                        height: 200,
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              "images/icons8-farm-house-100.png",
+                              scale: 2.5,
+                              color: Colors.black,
                             ),
-                          ),
-                          Text("Keep stock of items in your farm"),
-                        ],
+                            Text(
+                              "Stock Count",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text("Keep stock of items in your farm"),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -189,35 +195,41 @@ class Home extends StatelessWidget {
                     width: 10,
                   ),
                   Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0XFFEFF4F5),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            10,
-                          ),
-                        ),
-                      ),
-                      height: 200,
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            "images/icons8-truck-100.png",
-                            scale: 2.5,
-                            color: Colors.black,
-                          ),
-                          Text(
-                            "Open Orders",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                    child: GestureDetector(
+                      onTap: () {
+                        Provider.of<LayoutIndexProv>(context, listen: false)
+                            .onTapChangeScreen(2);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0XFFEFF4F5),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(
+                              10,
                             ),
                           ),
-                          Text("Fulfill all open orders from distributors"),
-                        ],
+                        ),
+                        height: 200,
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              "images/icons8-truck-100.png",
+                              scale: 2.5,
+                              color: Colors.black,
+                            ),
+                            Text(
+                              "Open Orders",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text("Fulfill all open orders from distributors"),
+                          ],
+                        ),
                       ),
                     ),
                   ),

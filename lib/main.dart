@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/layout.dart';
 import 'package:poultry/providers/farm_prov.dart';
+import 'package:poultry/providers/layout_index.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:poultry/widgets/scroll_behaviour.dart';
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FarmProv>(
           create: (_) => FarmProv(),
+        ),
+        ChangeNotifierProvider<LayoutIndexProv>(
+          create: (_) => LayoutIndexProv(),
         ),
       ],
       child: MaterialApp(

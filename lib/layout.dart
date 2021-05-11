@@ -4,6 +4,8 @@ import 'package:poultry/analytics.dart';
 import 'package:poultry/home.dart';
 import 'package:poultry/orders.dart';
 import 'package:poultry/stock.dart';
+import 'package:provider/provider.dart';
+import 'package:poultry/providers/layout_index.dart';
 
 class Layout extends StatefulWidget {
   @override
@@ -11,7 +13,6 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  int _selectedScreen = 0;
   List<Widget> _screens = [
     Home(),
     Stock(),
@@ -20,22 +21,15 @@ class _LayoutState extends State<Layout> {
     Account(),
   ];
 
-  void onTapChangeScreen(int index) {
-    setState(
-      () {
-        _selectedScreen = index;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XFFC0F9E3),
         // resizeToAvoidBottomPadding: false,
         resizeToAvoidBottomInset: false,
-        body: _screens.elementAt(_selectedScreen),
+        body: _screens.elementAt(
+          Provider.of<LayoutIndexProv>(context).currentScreen,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           iconSize: 28,
@@ -62,8 +56,9 @@ class _LayoutState extends State<Layout> {
             ),
           ],
           selectedItemColor: Color(0XFF35D4C0),
-          onTap: onTapChangeScreen,
-          currentIndex: _selectedScreen,
+          onTap: Provider.of<LayoutIndexProv>(context, listen: false)
+              .onTapChangeScreen,
+          currentIndex: Provider.of<LayoutIndexProv>(context).currentScreen,
         ),
       ),
     );
