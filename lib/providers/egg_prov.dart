@@ -27,6 +27,13 @@ class EggProv with ChangeNotifier {
     }
   }
 
+  void resetValues() {
+    _egg.badEggs = 0;
+    _egg.goodEggs = 0;
+    _egg.collectedEggs = 0;
+    notifyListeners();
+  }
+
   int get totalEggs => _egg.collectedEggs;
   int get totalGoodEggs => _egg.goodEggs;
   int get totalBadEggs => _egg.badEggs;
