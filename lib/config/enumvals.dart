@@ -11,8 +11,23 @@ enum FieldType {
   state,
   lga,
   yearEstablished,
+  eggsCollected,
+  badEggs,
 }
 
-enum UserType { farmer, distributor }
+enum UserType {
+  farmer,
+  distributor,
+}
 
-enum OrderStatus { open, closed }
+enum OrderStatus {
+  open,
+  closed,
+}
+
+// Report card type
+enum StockReport {
+  chickens,
+  eggs,
+  fertilizer,
+}

@@ -5,6 +5,7 @@ import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/validatormsgs.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/providers/user_prov.dart';
+import 'package:poultry/providers/egg_prov.dart';
 import 'package:provider/provider.dart';
 
 class InputField extends StatefulWidget {
@@ -14,13 +15,21 @@ class InputField extends StatefulWidget {
   final FieldType fieldType;
   final bool iconVisible; // for the password field
   final int maxlen;
+  final double leftPadding;
+  final double rightPadding;
+  final double topPadding;
+  final double bottomPadding;
   InputField({
-    @required this.name,
+    this.name,
     @required this.keyboard,
     @required this.fieldType,
     this.onSaved,
     this.iconVisible = false,
     this.maxlen,
+    this.leftPadding = 20.0,
+    this.rightPadding = 20.0,
+    this.bottomPadding = 20.0,
+    this.topPadding = 5.0,
   });
 
   @override
@@ -47,20 +56,31 @@ class _InputFieldState extends State<InputField> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        widget.fieldType == FieldType.eggsCollected ||
+                widget.fieldType == FieldType.badEggs
+            ? SizedBox(
+                height: 0,
+              )
+            : Padding(
+                padding: EdgeInsets.only(
+                  left: widget.leftPadding,
+                ),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    widget.name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    //textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
         Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              widget.name,
-              style: TextStyle(fontWeight: FontWeight.bold),
-              //textAlign: TextAlign.left,
-            ),
+          padding: EdgeInsets.only(
+            left: widget.leftPadding,
+            right: widget.rightPadding,
+            top: widget.topPadding,
+            bottom: widget.bottomPadding,
           ),
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 20.0, right: 20, top: 5, bottom: 20),
           child: TextFormField(
             controller: _controller,
             validator: validatorMsg[widget.fieldType],
@@ -97,12 +117,48 @@ class _InputFieldState extends State<InputField> {
                 Provider.of<FarmProv>(context, listen: false).setLGA(
                   value,
                 );
+              } else if (FieldType.eggsCollected == widget.fieldType) {
+                if (value.isEmpty) {
+                  Provider.of<EggProv>(context, listen: false).setEggsCollected(
+                    0,
+                  );
+                  Provider.of<EggProv>(context, listen: false).setGoodEggs();
+                } else {
+                  Provider.of<EggProv>(context, listen: false).setEggsCollected(
+                    int.tryParse(value),
+                  );
+                  Provider.of<EggProv>(context, listen: false).setGoodEggs();
+                }
+                // print(
+                //     "Total eggs: ${Provider.of<EggProv>(context, listen: false).totalEggs}");
+                // print(
+                //     "Good Eggs: ${Provider.of<EggProv>(context, listen: false).totalGoodEggs}");
+                // print(
+                //     "Bad Eggs: ${Provider.of<EggProv>(context, listen: false).totalBadEggs}");
+              } else if (FieldType.badEggs == widget.fieldType) {
+                if (value.isEmpty) {
+                  Provider.of<EggProv>(context, listen: false).setBadEggs(0);
+                  Provider.of<EggProv>(context, listen: false).setGoodEggs();
+                } else {
+                  Provider.of<EggProv>(context, listen: false).setBadEggs(
+                    int.tryParse(value),
+                  );
+                  Provider.of<EggProv>(context, listen: false).setGoodEggs();
+                }
+                // print(
+                //     "Total eggs: ${Provider.of<EggProv>(context, listen: false).totalEggs}");
+                // print(
+                //     "Good Eggs: ${Provider.of<EggProv>(context, listen: false).totalGoodEggs}");
+                // print(
+                //     "Bad Eggs: ${Provider.of<EggProv>(context, listen: false).totalBadEggs}");
               }
             },
             maxLength: widget.maxlen,
             obscureText: widget.iconVisible ? _hidePassword : false,
             keyboardType: widget.keyboard,
-            cursorColor: Colors.green,
+            cursorColor: widget.fieldType == FieldType.badEggs
+                ? Colors.red
+                : Colors.green,
             inputFormatters: (TextInputType.number == widget.keyboard)
                 ? [FilteringTextInputFormatter.digitsOnly]
                 : null,
@@ -136,11 +192,20 @@ class _InputFieldState extends State<InputField> {
                   : null,
               fillColor: Color(0XFFEAE9EB),
               filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Colors.green,
-                ),
-              ),
+              focusedBorder: widget.fieldType == FieldType.eggsCollected ||
+                      widget.fieldType == FieldType.badEggs
+                  ? UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: widget.fieldType == FieldType.badEggs
+                            ? Colors.red
+                            : Colors.green,
+                      ),
+                    )
+                  : OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.green,
+                      ),
+                    ),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/widgets/stock_card.dart';
 
 class Stock extends StatelessWidget {
@@ -9,19 +10,18 @@ class Stock extends StatelessWidget {
         StockCard(
           name: "Chickens",
           itemCount: 2,
+          reportCategory: StockReport.chickens,
         ),
         StockCard(
           name: "Eggs",
-          itemCount: 3,
+          itemCount: 1,
+          reportCategory: StockReport.eggs,
         ),
         StockCard(
-          name: "Fertilizer",
-          itemCount: 1,
+          name: "Feed/Fertilizer",
+          itemCount: 2,
+          reportCategory: StockReport.fertilizer,
         ),
-        // StockCard(
-        //   name: "Fertilizer",
-        //   itemCount: 1,
-        // )
       ],
     );
   }

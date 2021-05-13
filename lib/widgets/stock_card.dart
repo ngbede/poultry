@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:poultry/layout.dart';
+import 'package:poultry/chicken_report.dart';
+import 'package:poultry/config/date.dart';
+import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/egg_report.dart';
+import 'package:poultry/fertilizer_report.dart';
 
 class StockCard extends StatelessWidget {
   final String name;
   final int itemCount;
+  final StockReport reportCategory;
   StockCard({
     @required this.name,
     @required this.itemCount,
+    @required this.reportCategory,
   });
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class StockCard extends StatelessWidget {
                       "Next Report due: ",
                     ),
                     Text(
-                      "Sat 15 May",
+                      todaysDate,
                       style: TextStyle(
                         color: Color(0XFF35D4C0),
                         fontWeight: FontWeight.bold,
@@ -98,7 +104,12 @@ class StockCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Layout(),
+                      builder: (context) =>
+                          reportCategory == StockReport.chickens
+                              ? ChickenReport()
+                              : reportCategory == StockReport.eggs
+                                  ? EggReport()
+                                  : FertilizerReport(),
                     ),
                   );
                 },

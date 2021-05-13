@@ -5,7 +5,7 @@ import 'package:poultry/layout.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/providers/layout_index.dart';
 import 'package:poultry/providers/user_prov.dart';
-import 'package:poultry/signup.dart';
+import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/widgets/scroll_behaviour.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,6 +40,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<LayoutIndexProv>(
           create: (_) => LayoutIndexProv(),
+        ),
+        ChangeNotifierProvider<EggProv>(
+          create: (_) => EggProv(),
         ),
       ],
       child: MaterialApp(
