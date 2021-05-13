@@ -13,6 +13,8 @@ enum FieldType {
   yearEstablished,
   eggsCollected,
   badEggs,
+  batchName,
+  batchQuantity,
 }
 
 enum UserType {
@@ -30,4 +32,9 @@ enum StockReport {
   chickens,
   eggs,
   fertilizer,
+}
+
+enum BirdType {
+  broiler,
+  layer,
 }

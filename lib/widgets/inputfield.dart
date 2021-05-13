@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/validatormsgs.dart';
+import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/providers/egg_prov.dart';
@@ -57,7 +58,9 @@ class _InputFieldState extends State<InputField> {
     return Column(
       children: [
         widget.fieldType == FieldType.eggsCollected ||
-                widget.fieldType == FieldType.badEggs
+                widget.fieldType == FieldType.badEggs ||
+                widget.fieldType == FieldType.batchQuantity ||
+                widget.fieldType == FieldType.batchName
             ? SizedBox(
                 height: 0,
               )
@@ -129,12 +132,6 @@ class _InputFieldState extends State<InputField> {
                   );
                   Provider.of<EggProv>(context, listen: false).setGoodEggs();
                 }
-                // print(
-                //     "Total eggs: ${Provider.of<EggProv>(context, listen: false).totalEggs}");
-                // print(
-                //     "Good Eggs: ${Provider.of<EggProv>(context, listen: false).totalGoodEggs}");
-                // print(
-                //     "Bad Eggs: ${Provider.of<EggProv>(context, listen: false).totalBadEggs}");
               } else if (FieldType.badEggs == widget.fieldType) {
                 if (value.isEmpty) {
                   Provider.of<EggProv>(context, listen: false).setBadEggs(0);
@@ -145,12 +142,13 @@ class _InputFieldState extends State<InputField> {
                   );
                   Provider.of<EggProv>(context, listen: false).setGoodEggs();
                 }
-                // print(
-                //     "Total eggs: ${Provider.of<EggProv>(context, listen: false).totalEggs}");
-                // print(
-                //     "Good Eggs: ${Provider.of<EggProv>(context, listen: false).totalGoodEggs}");
-                // print(
-                //     "Bad Eggs: ${Provider.of<EggProv>(context, listen: false).totalBadEggs}");
+              } else if (FieldType.batchName == widget.fieldType) {
+                Provider.of<BirdsProv>(context, listen: false)
+                    .setBatchName(value);
+              } else if (FieldType.batchQuantity == widget.fieldType) {
+                Provider.of<BirdsProv>(context, listen: false).setQuantity(
+                  int.tryParse(value),
+                );
               }
             },
             maxLength: widget.maxlen,
@@ -193,7 +191,9 @@ class _InputFieldState extends State<InputField> {
               fillColor: Color(0XFFEAE9EB),
               filled: true,
               focusedBorder: widget.fieldType == FieldType.eggsCollected ||
-                      widget.fieldType == FieldType.badEggs
+                      widget.fieldType == FieldType.badEggs ||
+                      widget.fieldType == FieldType.batchQuantity ||
+                      widget.fieldType == FieldType.batchName
                   ? UnderlineInputBorder(
                       borderSide: BorderSide(
                         color: widget.fieldType == FieldType.badEggs
