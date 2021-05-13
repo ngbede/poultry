@@ -53,6 +53,17 @@ class EggReport extends StatelessWidget {
                     ),
                   ),
                   Expanded(
+                    child: Text(
+                      "${Provider.of<EggProv>(context).totalEggs}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.brown,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
                     child: InputField(
                       keyboard: TextInputType.number,
                       fieldType: FieldType.eggsCollected,
@@ -110,7 +121,7 @@ class EggReport extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      "${Provider.of<EggProv>(context, listen: false).totalBadEggs}",
+                      "${Provider.of<EggProv>(context).totalBadEggs}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.red,
