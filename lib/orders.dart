@@ -1,10 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/config/firebase.dart';
 import 'package:poultry/tabview.dart';
-import 'package:poultry/widgets/orders_card.dart';
 
 class Orders extends StatelessWidget {
   @override
