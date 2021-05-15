@@ -9,11 +9,11 @@ class Birds {
 
   Birds({
     this.batchName = "",
-    this.birdType = "",
+    this.birdType = "Broiler",
     this.quantity = 0,
     this.startDate = "",
-    this.month = "",
-    this.day = "",
-    this.year = "",
+    this.month = "January",
+    this.day = "1",
+    this.year = "2021",
   });
 }

@@ -43,10 +43,10 @@ class BirdsProv with ChangeNotifier {
     _birdBatch.batchName = "";
     _birdBatch.quantity = 0;
     _birdBatch.startDate = "";
-    _birdBatch.birdType = "";
-    _birdBatch.day = "";
-    _birdBatch.month = "";
-    _birdBatch.year = "";
+    _birdBatch.birdType = "Broiler";
+    _birdBatch.day = "1";
+    _birdBatch.month = "January";
+    _birdBatch.year = "2021";
     notifyListeners();
   }
 

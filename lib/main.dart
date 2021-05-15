@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/layout.dart';
+import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/providers/layout_index.dart';
 import 'package:poultry/providers/user_prov.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<EggProv>(
           create: (_) => EggProv(),
+        ),
+        ChangeNotifierProvider<BirdsProv>(
+          create: (_) => BirdsProv(),
         ),
       ],
       child: MaterialApp(
