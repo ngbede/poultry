@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/login.dart';
-import 'package:poultry/provider/user_prov.dart';
+import 'package:poultry/providers/user_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:poultry/widgets/user_role_button.dart';

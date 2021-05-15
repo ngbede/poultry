@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/provider/user_prov.dart';
+import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
