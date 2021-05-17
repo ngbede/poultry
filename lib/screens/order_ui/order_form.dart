@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poultry/widgets/inputfield.dart';
 
-import 'config/enumvals.dart';
+import '../../config/enumvals.dart';
 
 class OrderForm extends StatelessWidget {
   @override

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/layout.dart';
+import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/user_prov.dart';
-import 'package:poultry/signup.dart';
+import 'package:poultry/screens/onboarding_ui/signup.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'config/firebase.dart';
+import '../../config/firebase.dart';
 
 class Login extends StatefulWidget {
   @override

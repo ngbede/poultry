@@ -6,7 +6,7 @@ import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/widgets/stock_card.dart';
 import 'package:provider/provider.dart';
 
-import 'config/firebase.dart';
+import '../../config/firebase.dart';
 
 class Stock extends StatefulWidget {
   @override

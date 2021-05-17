@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
 
-import 'config/firebase.dart';
-import 'widgets/orders_card.dart';
+import '../../config/firebase.dart';
+import '../../widgets/orders_card.dart';
 
 class OrderTabView extends StatelessWidget {
   final OrderStatus orderStatus;

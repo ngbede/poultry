@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:poultry/account.dart';
-import 'package:poultry/analytics.dart';
-import 'package:poultry/home.dart';
-import 'package:poultry/orders.dart';
-import 'package:poultry/stock.dart';
+import 'package:poultry/screens/account_ui/account.dart';
+import 'package:poultry/screens/analytics_ui/analytics.dart';
+import 'package:poultry/screens/home_ui/home.dart';
+import 'package:poultry/screens/order_ui/orders.dart';
+import 'package:poultry/screens/stock_ui/stock.dart';
 import 'package:provider/provider.dart';
 import 'package:poultry/providers/layout_index.dart';
 

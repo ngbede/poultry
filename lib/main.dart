@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
-import 'package:poultry/layout.dart';
+import 'package:poultry/screens/layout.dart';
+import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/providers/layout_index.dart';
@@ -19,7 +20,6 @@ void main() async {
   store.settings = Settings(
     host: storeHost,
     sslEnabled: false,
-    persistenceEnabled: true,
   );
   await auth.useEmulator(authHost);
   //print(auth.currentUser);
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           // primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Layout(),
+        home: Login(),
       ),
     );
   }
