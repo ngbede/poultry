@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/layout.dart';
 import 'package:poultry/login.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -65,6 +66,7 @@ class _SignupState extends State<Signup> {
                     name: "Phone number",
                     keyboard: TextInputType.phone,
                     fieldType: FieldType.phone,
+                    maxlen: 11,
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 20),
@@ -99,8 +101,6 @@ class _SignupState extends State<Signup> {
                       if (_signupFormKey.currentState.validate()) {
                         final _progress = ProgressHUD.of(context);
                         _progress.showWithText("Creating account...");
-                        await Future.delayed(
-                            Duration(seconds: 5)); // simulate progress
                         try {
                           final UserCredential _user =
                               await auth.createUserWithEmailAndPassword(
@@ -140,6 +140,12 @@ class _SignupState extends State<Signup> {
                               },
                             );
                             _progress.dismiss();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Layout(),
+                              ),
+                            );
                             print("Signup successful");
                           }
                         } catch (e) {

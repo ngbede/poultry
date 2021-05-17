@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/layout.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/signup.dart';
 import 'package:poultry/widgets/inputfield.dart';
@@ -63,8 +64,6 @@ class _LoginState extends State<Login> {
                       if (_signinFormkey.currentState.validate()) {
                         final _progress = ProgressHUD.of(context);
                         _progress.showWithText("Logging in...");
-                        await Future.delayed(
-                            Duration(seconds: 5)); // simulate progress
                         try {
                           final UserCredential _user =
                               await auth.signInWithEmailAndPassword(
@@ -75,8 +74,13 @@ class _LoginState extends State<Login> {
                                     .password,
                           );
                           if (_user != null) {
-                            // TODO: navigate to app menu
                             _progress.dismiss();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Layout(),
+                              ),
+                            );
                             print("Sign in successful");
                           }
                         } on FirebaseAuthException catch (e) {
