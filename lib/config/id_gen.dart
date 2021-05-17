@@ -57,17 +57,13 @@ String generateID() {
     "y",
     "z"
   ];
-  List<String> id = [];
+  String id = "";
   for (int i = 0; i < 5; i++) {
     _alphabets.shuffle();
     if (i < 2) {
-      id.add(
-        _alphabets[_random.nextInt(52)],
-      );
+      id += _alphabets[_random.nextInt(52)];
     } else {
-      id.add(
-        _random.nextInt(10).toString(),
-      );
+      id += _random.nextInt(10).toString();
     }
   }
   return id.toString();
