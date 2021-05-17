@@ -4,16 +4,19 @@ import 'package:poultry/chicken_report.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/egg_report.dart';
-import 'package:poultry/fertilizer_report.dart';
 
 class StockCard extends StatelessWidget {
   final String name;
   final int itemCount;
+  final int itemsCounted;
   final StockReport reportCategory;
+  final double completionRate;
   StockCard({
     @required this.name,
     @required this.itemCount,
     @required this.reportCategory,
+    this.itemsCounted = 0,
+    this.completionRate = 0,
   });
   @override
   Widget build(BuildContext context) {
@@ -76,16 +79,16 @@ class StockCard extends StatelessWidget {
                 radius: 140.0,
                 lineWidth: 15.0,
                 animation: true,
-                percent: 0.7,
+                percent: completionRate,
                 center: Text(
-                  "70.0%",
+                  "${completionRate * 100} %",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
                   ),
                 ),
                 footer: Text(
-                  "0 of $itemCount items complete",
+                  "$itemsCounted of $itemCount items complete",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17.0,
@@ -107,9 +110,7 @@ class StockCard extends StatelessWidget {
                       builder: (context) =>
                           reportCategory == StockReport.chickens
                               ? ChickenReport()
-                              : reportCategory == StockReport.eggs
-                                  ? EggReport()
-                                  : FertilizerReport(),
+                              : EggReport(),
                     ),
                   );
                 },
