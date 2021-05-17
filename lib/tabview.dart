@@ -19,38 +19,61 @@ class OrderTabView extends StatelessWidget {
                     .doc(auth.currentUser.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
-                  List<OrderCard> farmOrders = [];
+                  List<Widget> farmOrders = [];
                   if (snapshot.hasData) {
-                    final orderList = snapshot.data.data().values;
-                    for (var data in orderList) {
-                      if (orderStatus == OrderStatus.open
-                          ? data["open"]
-                          : !data["open"]) {
-                        final bool open = data["open"];
-                        final String name = data["name"];
-                        final String address = data["address"];
-                        final String contact = data["contact"];
-                        final String id = data["ID"];
-                        final String status = open ? "PENDING" : "DELIVERED";
-                        final String date = data["date"];
-                        // ignore: unused_local_variable
-                        final int fertilizer = data["bagsOfFertilizer"];
-                        // ignore: unused_local_variable
-                        final int chickens = data["chickens"];
-                        // ignore: unused_local_variable
-                        final int eggCrates = data["cratesOfEggs"];
-                        final int productCount = data["products"];
-                        farmOrders.add(
-                          OrderCard(
-                            status: status,
-                            name: name,
-                            productCount: productCount,
-                            contact: contact,
-                            address: address,
-                            date: date,
-                            id: id,
-                          ),
-                        );
+                    if (snapshot.data.data() == null) {
+                      farmOrders.add(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                            ),
+                            Text(
+                              OrderStatus.open == orderStatus
+                                  ? "You have no open orders..."
+                                  : "You have no closed orders...",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      final orderList = snapshot.data.data().values;
+                      for (var data in orderList) {
+                        // print(data);
+                        if (orderStatus == OrderStatus.open
+                            ? data["open"]
+                            : !data["open"]) {
+                          final bool open = data["open"];
+                          final String name = data["name"];
+                          final String address = data["address"];
+                          final String contact = data["contact"];
+                          final String id = data["ID"];
+                          final String status = open ? "PENDING" : "DELIVERED";
+                          final String date = data["date"];
+                          // ignore: unused_local_variable
+                          final int fertilizer = data["bagsOfFertilizer"];
+                          // ignore: unused_local_variable
+                          final int chickens = data["chickens"];
+                          // ignore: unused_local_variable
+                          final int eggCrates = data["cratesOfEggs"];
+                          final int productCount = data["products"];
+                          farmOrders.add(
+                            OrderCard(
+                              status: status,
+                              name: name,
+                              productCount: productCount,
+                              contact: contact,
+                              address: address,
+                              date: date,
+                              id: id,
+                            ),
+                          );
+                        }
                       }
                     }
                   }
