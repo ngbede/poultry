@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/models/eggs.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:provider/provider.dart';
 import 'package:poultry/providers/egg_prov.dart';
+import 'package:poultry/config/firebase.dart';
 
 class EggReport extends StatelessWidget {
   @override
@@ -11,8 +14,9 @@ class EggReport extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color(0XFF35D4C0),
-          title: Text("Eggs Collected"),
+          title: Text("Egg stock count"),
         ),
         body: Column(
           children: [
@@ -183,25 +187,116 @@ class EggReport extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      width: 200,
-                      child: Card(
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        color: Color(0XFF35D4C0),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 7.0,
+                    child: GestureDetector(
+                      onTap: () async {
+                        String dateFormat = "";
+                        dateFormat += today.day.toString();
+                        dateFormat += "_0";
+                        dateFormat += today.month.toString();
+                        dateFormat += "_";
+                        dateFormat += today.year.toString();
+                        print(dateFormat);
+                        DocumentReference documentReference = store
+                            .collection('stock_eggs')
+                            .doc(auth.currentUser.uid);
+                        store.runTransaction((transaction) async {
+                          DocumentSnapshot snapshot =
+                              await transaction.get(documentReference);
+                          if (!snapshot.data().containsKey(dateFormat)) {
+                            await store
+                                .collection('stock_eggs')
+                                .doc(auth.currentUser.uid)
+                                .update(
+                              {
+                                dateFormat: {
+                                  "eggsCollected": Provider.of<EggProv>(context,
+                                          listen: false)
+                                      .totalEggs,
+                                  "badEggs": Provider.of<EggProv>(context,
+                                          listen: false)
+                                      .totalBadEggs,
+                                  "goodEggs": Provider.of<EggProv>(context,
+                                          listen: false)
+                                      .totalGoodEggs,
+                                }
+                              },
+                            );
+                            Fluttertoast.showToast(
+                              msg: "Stock count recorded",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Color(0XFF35D4C0),
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            await Future.delayed(
+                              Duration(seconds: 1),
+                            );
+                            Provider.of<EggProv>(context, listen: false)
+                                .resetValues();
+                            Provider.of<EggProv>(context, listen: false)
+                                .setPercent(1.0);
+                            Navigator.pop(context);
+                          } else {
+                            int newTotalEggsCollected =
+                                snapshot.data()[dateFormat]["eggsCollected"] +
+                                    Provider.of<EggProv>(context, listen: false)
+                                        .totalEggs;
+                            int newTotalGoodEggs = snapshot.data()[dateFormat]
+                                    ["goodEggs"] +
+                                Provider.of<EggProv>(context, listen: false)
+                                    .totalGoodEggs;
+                            int newTotalBadEggs = snapshot.data()[dateFormat]
+                                    ["badEggs"] +
+                                Provider.of<EggProv>(context, listen: false)
+                                    .totalBadEggs;
+                            transaction.update(documentReference, {
+                              "$dateFormat.eggsCollected":
+                                  newTotalEggsCollected,
+                              "$dateFormat.badEggs": newTotalBadEggs,
+                              "$dateFormat.goodEggs": newTotalGoodEggs
+                            });
+                            Fluttertoast.showToast(
+                              msg: "Stock count recorded",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Color(0XFF35D4C0),
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            await Future.delayed(
+                              Duration(seconds: 1),
+                            );
+                            Provider.of<EggProv>(context, listen: false)
+                                .resetValues();
+                            Provider.of<EggProv>(context, listen: false)
+                                .setPercent(1.0);
+                            Navigator.pop(context);
+                          }
+                        });
+                      },
+                      child: Container(
+                        width: 200,
+                        child: Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Text(
-                            "Submit Count",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
+                          color: Color(0XFF35D4C0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 7.0,
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              "Submit Count",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),

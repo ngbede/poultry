@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:poultry/models/eggs.dart';
 
-// TODO: add extra checks for certain use cases when adding stock values
 class EggProv with ChangeNotifier {
   final Eggs _egg = Eggs();
 
@@ -27,6 +26,11 @@ class EggProv with ChangeNotifier {
     }
   }
 
+  void setPercent(double value) {
+    _egg.percent = value;
+    notifyListeners();
+  }
+
   void resetValues() {
     _egg.badEggs = 0;
     _egg.goodEggs = 0;
@@ -37,5 +41,6 @@ class EggProv with ChangeNotifier {
   int get totalEggs => _egg.collectedEggs;
   int get totalGoodEggs => _egg.goodEggs;
   int get totalBadEggs => _egg.badEggs;
+  double get percentage => _egg.percent;
   String get collectionDate => _egg.collectionDate;
 }
