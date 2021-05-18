@@ -7,9 +7,9 @@ import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:poultry/widgets/toast.dart';
 import 'package:poultry/widgets/user_role_button.dart';
 import 'package:provider/provider.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 class Signup extends StatefulWidget {
@@ -150,22 +150,14 @@ class _SignupState extends State<Signup> {
                           }
                         } catch (e) {
                           _progress.dismiss();
-                          Fluttertoast.showToast(
-                            msg: "${e.code}",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.teal,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          toaster(e.code);
                         }
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Card(
-                        color: Colors.green[400],
+                        color: Color(0XFF35D4C0),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(

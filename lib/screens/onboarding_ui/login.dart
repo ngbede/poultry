@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/screens/onboarding_ui/signup.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:poultry/widgets/toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/firebase.dart';
@@ -85,22 +85,14 @@ class _LoginState extends State<Login> {
                           }
                         } on FirebaseAuthException catch (e) {
                           _progress.dismiss();
-                          Fluttertoast.showToast(
-                            msg: "${e.code}",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.teal,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          toaster(e.code);
                         }
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Card(
-                        color: Colors.green[400],
+                        color: Color(0XFF35D4C0),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
