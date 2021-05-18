@@ -1,6 +1,8 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:poultry/widgets/modal_sheet.dart';
+import 'package:poultry/config/firebase.dart';
+import 'package:poultry/screens/stock_ui/batch_card.dart';
+import 'package:poultry/screens/stock_ui/modal_sheet.dart';
 
 class ChickenReport extends StatelessWidget {
   @override
@@ -9,11 +11,10 @@ class ChickenReport extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           //automaticallyImplyLeading: false,
-          actions: [],
           backgroundColor: Color(0XFF35D4C0),
           title: Text("Chicken Report"),
         ),
-        body: ListView(
+        body: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,6 +81,79 @@ class ChickenReport extends StatelessWidget {
                 ),
               ],
             ),
+            StreamBuilder(
+              stream: store
+                  .collection("stock_chickens")
+                  .doc(auth.currentUser.uid)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                List<Widget> chickenBatches = [];
+                if (snapshot.hasData) {
+                  print("check: ${snapshot.data.data() == null}");
+                  if (snapshot.data.data() == null) {
+                    chickenBatches.add(
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 200,
+                          ),
+                          Text(
+                            "Tap on \"New batch\" to add new batch of chickens...",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    Map data = snapshot.data.data();
+                    if (data.isNotEmpty) {
+                      final batchList = snapshot.data.data().values;
+                      for (var batch in batchList) {
+                        final String batchName = batch["batchName"];
+                        final String birdType = batch["birdType"];
+                        final int quantity = batch["quantity"];
+                        final String startDate = batch["startDate"];
+                        chickenBatches.add(
+                          BatchCard(
+                            batchName: batchName,
+                            birdType: birdType,
+                            quantity: quantity,
+                            startDate: startDate,
+                          ),
+                        );
+                      }
+                    } else {
+                      chickenBatches.add(
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 200,
+                            ),
+                            Text(
+                              "Tap on \"New batch\" to add new batch of chickens...",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  }
+                }
+                return Expanded(
+                  child: ListView(
+                    children: chickenBatches,
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
