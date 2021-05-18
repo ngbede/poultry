@@ -14,3 +14,8 @@ String formatDate() {
   dateFormat += today.year.toString();
   return dateFormat;
 }
+
+String customDateFormat(String day, String month, String year) {
+  String dateFormat = day + " " + month + ", " + year;
+  return dateFormat;
+}

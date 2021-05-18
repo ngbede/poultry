@@ -173,7 +173,6 @@ class _InputFieldState extends State<InputField> {
                         setState(
                           () {
                             _hidePassword = !_hidePassword;
-                            print("Hide password: $_hidePassword");
                           },
                         );
                       },
@@ -184,7 +183,7 @@ class _InputFieldState extends State<InputField> {
                             )
                           : Icon(
                               FluentIcons.eye_show_24_regular,
-                              color: Colors.teal,
+                              color: Color(0XFF35D4C0),
                             ),
                     )
                   : null,
@@ -203,7 +202,7 @@ class _InputFieldState extends State<InputField> {
                     )
                   : OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.green,
+                        color: Color(0XFF35D4C0),
                       ),
                     ),
             ),

@@ -20,6 +20,7 @@ Container customPicker(
   return Container(
     color: Color(0XFFEAE9EB),
     child: DropdownButton(
+      underline: Container(),
       items: itemList,
       value: chosenValue,
       onChanged: changeFunct,
