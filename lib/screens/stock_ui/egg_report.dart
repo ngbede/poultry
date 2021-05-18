@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/widgets/toast.dart';
+import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:poultry/widgets/stock_fields.dart';
+import 'package:poultry/widgets/styles.dart';
 import 'package:provider/provider.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/config/firebase.dart';
@@ -18,294 +21,213 @@ class EggReport extends StatelessWidget {
           backgroundColor: Color(0XFF35D4C0),
           title: Text("Egg stock count"),
         ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Collection Date",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+        body: Consumer<EggProv>(
+          builder: (context, eggData, child) {
+            return Column(
+              children: [
+                StockFields(
+                  rowFields: [
+                    Text(
+                      "Collection Date",
+                      style: stockFieldTitleStyle,
                     ),
-                  ),
-                  Text(
-                    "${Provider.of<EggProv>(context).collectionDate}",
-                    style: TextStyle(
-                        color: Colors.amber, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 10,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Eggs Collected",
+                    Text(
+                      "${eggData.collectionDate}",
                       style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                          color: Colors.amber, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                StockFields(
+                  rowFields: [
+                    Expanded(
+                      child: Text(
+                        "Eggs Collected",
+                        style: stockFieldTitleStyle,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${Provider.of<EggProv>(context).totalEggs}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.brown,
-                        fontSize: 15,
+                    Expanded(
+                      child: Text(
+                        "${eggData.totalEggs}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.eggsCollected,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
+                    Expanded(
+                      flex: 2,
+                      child: InputField(
+                        keyboard: TextInputType.number,
+                        fieldType: FieldType.eggsCollected,
+                        rightPadding: 0,
+                        leftPadding: 50,
+                        bottomPadding: 0,
+                        topPadding: 5,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 10,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Good Eggs",
+                  ],
+                ),
+                StockFields(
+                  rowFields: [
+                    Expanded(
+                      child: Text(
+                        "Good Eggs",
+                        style: stockFieldTitleStyle,
+                      ),
+                    ),
+                    Text(
+                      "${eggData.totalGoodEggs}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
+                        color: Colors.green,
                         fontSize: 15,
                       ),
                     ),
-                  ),
-                  Text(
-                    "${Provider.of<EggProv>(context).totalGoodEggs}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                      fontSize: 15,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 10,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Bad Eggs",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                  ],
+                ),
+                StockFields(
+                  rowFields: [
+                    Expanded(
+                      child: Text(
+                        "Bad Eggs",
+                        style: stockFieldTitleStyle,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "${Provider.of<EggProv>(context).totalBadEggs}",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                        fontSize: 15,
+                    Expanded(
+                      child: Text(
+                        "${eggData.totalBadEggs}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.badEggs,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
+                    Expanded(
+                      flex: 2,
+                      child: InputField(
+                        keyboard: TextInputType.number,
+                        fieldType: FieldType.badEggs,
+                        rightPadding: 0,
+                        leftPadding: 50,
+                        bottomPadding: 0,
+                        topPadding: 5,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Provider.of<EggProv>(context, listen: false)
-                            .resetValues();
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        width: 200,
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          color: Color(0XFF35D4C0),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 7.0,
-                            ),
-                            child: Text(
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            eggData.resetValues();
+                            Navigator.pop(context);
+                          },
+                          child: ActionButton(
+                            childWidget: Text(
                               "Cancel",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                              ),
+                              style: actionButtonStyle,
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        String dateFormat = "";
-                        dateFormat += today.day.toString();
-                        dateFormat += "_0";
-                        dateFormat += today.month.toString();
-                        dateFormat += "_";
-                        dateFormat += today.year.toString();
-                        print(dateFormat);
-                        DocumentReference documentReference = store
-                            .collection('stock_eggs')
-                            .doc(auth.currentUser.uid);
-                        store.runTransaction((transaction) async {
-                          DocumentSnapshot snapshot =
-                              await transaction.get(documentReference);
-                          if (!snapshot.data().containsKey(dateFormat)) {
-                            await store
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () async {
+                            DocumentReference documentReference = store
                                 .collection('stock_eggs')
-                                .doc(auth.currentUser.uid)
-                                .update(
-                              {
-                                dateFormat: {
-                                  "eggsCollected": Provider.of<EggProv>(context,
-                                          listen: false)
-                                      .totalEggs,
-                                  "badEggs": Provider.of<EggProv>(context,
-                                          listen: false)
-                                      .totalBadEggs,
-                                  "goodEggs": Provider.of<EggProv>(context,
-                                          listen: false)
-                                      .totalGoodEggs,
+                                .doc(auth.currentUser.uid);
+                            store.runTransaction((transaction) async {
+                              DocumentSnapshot snapshot =
+                                  await transaction.get(documentReference);
+                              // check if user doc exist
+                              if (snapshot.data() == null) {
+                                await store
+                                    .collection('stock_eggs')
+                                    .doc(auth.currentUser.uid)
+                                    .set(
+                                  {
+                                    formatDate(): {
+                                      "eggsCollected": eggData.totalEggs,
+                                      "badEggs": eggData.totalBadEggs,
+                                      "goodEggs": eggData.totalGoodEggs,
+                                      "date": eggData.collectionDate,
+                                    }
+                                  },
+                                );
+                              } else {
+                                if (!snapshot
+                                    .data()
+                                    .containsKey(formatDate())) {
+                                  await store
+                                      .collection('stock_eggs')
+                                      .doc(auth.currentUser.uid)
+                                      .update(
+                                    {
+                                      formatDate(): {
+                                        "eggsCollected": eggData.totalEggs,
+                                        "badEggs": eggData.totalBadEggs,
+                                        "goodEggs": eggData.totalGoodEggs,
+                                        "date": eggData.collectionDate,
+                                      }
+                                    },
+                                  );
+                                } else {
+                                  int newTotalEggsCollected =
+                                      snapshot.data()[formatDate()]
+                                              ["eggsCollected"] +
+                                          eggData.totalEggs;
+                                  int newTotalGoodEggs = snapshot
+                                          .data()[formatDate()]["goodEggs"] +
+                                      eggData.totalGoodEggs;
+                                  int newTotalBadEggs =
+                                      snapshot.data()[formatDate()]["badEggs"] +
+                                          eggData.totalBadEggs;
+                                  transaction.update(documentReference, {
+                                    "${formatDate()}.eggsCollected":
+                                        newTotalEggsCollected,
+                                    "${formatDate()}.badEggs": newTotalBadEggs,
+                                    "${formatDate()}.goodEggs":
+                                        newTotalGoodEggs,
+                                    "${formatDate()}.date":
+                                        eggData.collectionDate,
+                                  });
                                 }
-                              },
-                            );
-                            Fluttertoast.showToast(
-                              msg: "Stock count recorded",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Color(0XFF35D4C0),
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            await Future.delayed(
-                              Duration(seconds: 1),
-                            );
-                            Provider.of<EggProv>(context, listen: false)
-                                .resetValues();
-                            Provider.of<EggProv>(context, listen: false)
-                                .setPercent(1.0);
-                            Navigator.pop(context);
-                          } else {
-                            int newTotalEggsCollected =
-                                snapshot.data()[dateFormat]["eggsCollected"] +
-                                    Provider.of<EggProv>(context, listen: false)
-                                        .totalEggs;
-                            int newTotalGoodEggs = snapshot.data()[dateFormat]
-                                    ["goodEggs"] +
-                                Provider.of<EggProv>(context, listen: false)
-                                    .totalGoodEggs;
-                            int newTotalBadEggs = snapshot.data()[dateFormat]
-                                    ["badEggs"] +
-                                Provider.of<EggProv>(context, listen: false)
-                                    .totalBadEggs;
-                            transaction.update(documentReference, {
-                              "$dateFormat.eggsCollected":
-                                  newTotalEggsCollected,
-                              "$dateFormat.badEggs": newTotalBadEggs,
-                              "$dateFormat.goodEggs": newTotalGoodEggs
+                              }
+                            }).whenComplete(() async {
+                              toaster("Stock count recorded");
+                              await Future.delayed(
+                                Duration(seconds: 1),
+                              );
+                              eggData.resetValues();
+                              eggData.setPercent(1.0);
+                              Navigator.pop(context);
                             });
-                            Fluttertoast.showToast(
-                              msg: "Stock count recorded",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Color(0XFF35D4C0),
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            await Future.delayed(
-                              Duration(seconds: 1),
-                            );
-                            Provider.of<EggProv>(context, listen: false)
-                                .resetValues();
-                            Provider.of<EggProv>(context, listen: false)
-                                .setPercent(1.0);
-                            Navigator.pop(context);
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: 200,
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          color: Color(0XFF35D4C0),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 7.0,
-                            ),
-                            child: Text(
+                          },
+                          child: ActionButton(
+                            childWidget: Text(
                               "Submit Count",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                              ),
+                              style: actionButtonStyle,
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
