@@ -4,6 +4,8 @@ import 'package:poultry/screens/stock_ui/chicken_report.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/screens/stock_ui/egg_report.dart';
+import 'package:poultry/widgets/action_button.dart';
+import 'package:poultry/widgets/styles.dart';
 
 class StockCard extends StatelessWidget {
   final String name;
@@ -28,6 +30,7 @@ class StockCard extends StatelessWidget {
       child: Container(
         height: 300,
         child: Card(
+          elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -114,36 +117,20 @@ class StockCard extends StatelessWidget {
                     ),
                   );
                 },
-                child: Container(
-                  width: 200,
-                  child: Card(
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Color(0XFF35D4C0),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 7.0,
+                child: ActionButton(
+                  childWidget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Start report",
+                        style: actionButtonStyle,
+                        textAlign: TextAlign.center,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Start report",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
                 ),
               ),
