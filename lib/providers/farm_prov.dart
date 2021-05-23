@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:poultry/models/farm.dart';
-//import 'package:poultry/models/user.dart';
 
 class FarmProv with ChangeNotifier {
   final _farm = Farm();

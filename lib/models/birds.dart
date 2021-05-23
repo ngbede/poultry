@@ -6,6 +6,7 @@ class Birds {
   String month;
   String day;
   String year;
+  int batchCount;
 
   Birds({
     this.batchName = "",
@@ -15,5 +16,6 @@ class Birds {
     this.month = "January",
     this.day = "1",
     this.year = "2021",
+    this.batchCount = 0,
   });
 }
