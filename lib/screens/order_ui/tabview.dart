@@ -13,7 +13,7 @@ class OrderTabView extends StatelessWidget {
     return auth.currentUser != null
         ? Column(
             children: <Widget>[
-              StreamBuilder<DocumentSnapshot>(
+              StreamBuilder<DocumentSnapshot<Map>>(
                 stream: store
                     .collection("orders")
                     .doc(auth.currentUser.uid)
@@ -76,6 +76,10 @@ class OrderTabView extends StatelessWidget {
                         }
                       }
                     }
+                  } else {
+                    return CircularProgressIndicator(
+                      color: Color(0XFF35D4C0),
+                    );
                   }
                   return Expanded(
                     child: ListView(
