@@ -85,6 +85,7 @@ class _InputFieldState extends State<InputField> {
             bottom: widget.bottomPadding,
           ),
           child: TextFormField(
+            // autofocus: true,
             controller: _controller,
             validator: validatorMsg[widget.fieldType],
             onChanged: (value) {

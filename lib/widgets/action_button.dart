@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
   final Widget childWidget;
-  ActionButton({@required this.childWidget});
+  ActionButton({
+    @required this.childWidget,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(

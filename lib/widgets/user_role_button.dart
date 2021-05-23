@@ -6,7 +6,10 @@ import 'package:provider/provider.dart';
 class UserRole extends StatelessWidget {
   final String name;
   final valueProp;
-  UserRole({@required this.name, @required this.valueProp});
+  UserRole({
+    @required this.name,
+    @required this.valueProp,
+  });
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -17,7 +20,9 @@ class UserRole extends StatelessWidget {
           activeColor: Colors.green[400],
           groupValue: Provider.of<UserProv>(context).role,
           onChanged: (UserType value) {
-            Provider.of<UserProv>(context, listen: false).setUserRole(value);
+            Provider.of<UserProv>(context, listen: false).setUserRole(
+              value,
+            );
           },
         ),
       ),
