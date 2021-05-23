@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/tabview.dart';
+import 'package:poultry/screens/order_ui/tabview.dart';
 
 class Orders extends StatelessWidget {
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:poultry/screens/stock_ui/chicken_report.dart';
+import 'package:poultry/screens/stock_ui/chicken/chicken_report.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/screens/stock_ui/egg_report.dart';
+import 'package:poultry/screens/stock_ui/egg/egg_report.dart';
 import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/styles.dart';
 

@@ -39,6 +39,12 @@ class BirdsProv with ChangeNotifier {
     notifyListeners();
   }
 
+  // how many bathces of chickens does the farm have
+  void setNumberOfbatches(int count) {
+    _birdBatch.batchCount = count;
+    notifyListeners();
+  }
+
   void resetValues() {
     _birdBatch.batchName = "";
     _birdBatch.quantity = 0;
@@ -57,4 +63,5 @@ class BirdsProv with ChangeNotifier {
   String get startMonth => _birdBatch.month;
   String get startDay => _birdBatch.day;
   String get startYear => _birdBatch.year;
+  int get batchCount => _birdBatch.batchCount;
 }

@@ -12,14 +12,9 @@ import 'package:poultry/widgets/user_role_button.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
-class Signup extends StatefulWidget {
-  @override
-  _SignupState createState() => _SignupState();
-}
-
-class _SignupState extends State<Signup> {
+class Signup extends StatelessWidget {
   final _signupFormKey = GlobalKey<FormState>();
-  Map<UserType, String> _roleStr = {
+  final Map<UserType, String> _roleStr = {
     UserType.farmer: "farmer",
     UserType.distributor: "distributor"
   };
@@ -148,7 +143,7 @@ class _SignupState extends State<Signup> {
                             );
                             print("Signup successful");
                           }
-                        } catch (e) {
+                        } on FirebaseAuthException catch (e) {
                           _progress.dismiss();
                           toaster(e.code);
                         }

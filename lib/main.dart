@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/providers/data_prov.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/birds_prov.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<BirdsProv>(
           create: (_) => BirdsProv(),
+        ),
+        ChangeNotifierProvider<DataProv>(
+          create: (_) => DataProv(),
         ),
       ],
       child: MaterialApp(

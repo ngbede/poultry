@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 Container customPicker(
   BuildContext context,
   List items,
+  Color colour,
   String chosenValue,
-  Function changeFunct,
+  Function(dynamic) changeFunct,
 ) {
   List<DropdownMenuItem> itemList = [];
   for (var item in items) {
@@ -18,7 +19,7 @@ Container customPicker(
   }
 
   return Container(
-    color: Color(0XFFEAE9EB),
+    color: colour,
     child: DropdownButton(
       underline: Container(),
       items: itemList,

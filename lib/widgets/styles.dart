@@ -21,5 +21,5 @@ TextStyle batchCardTrailingText = TextStyle(
 
 TextStyle stockFieldTitleStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  fontSize: 15,
+  fontSize: 18,
 );

@@ -52,7 +52,7 @@ class EggReport extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.brown,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                       ),
                     ),
@@ -82,7 +82,7 @@ class EggReport extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
-                        fontSize: 15,
+                        fontSize: 18,
                       ),
                     ),
                   ],
@@ -101,7 +101,7 @@ class EggReport extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
-                          fontSize: 15,
+                          fontSize: 18,
                         ),
                       ),
                     ),
@@ -147,14 +147,13 @@ class EggReport extends StatelessWidget {
                                 .collection('stock_eggs')
                                 .doc(auth.currentUser.uid);
                             store.runTransaction((transaction) async {
-                              DocumentSnapshot snapshot =
+                              DocumentSnapshot<Map> snapshot =
                                   await transaction.get(documentReference);
                               // check if user doc exist
                               if (snapshot.data() == null) {
-                                await store
-                                    .collection('stock_eggs')
-                                    .doc(auth.currentUser.uid)
-                                    .set(
+                                print('1');
+                                transaction.set(
+                                  documentReference,
                                   {
                                     formatDate(): {
                                       "eggsCollected": eggData.totalEggs,
@@ -164,44 +163,44 @@ class EggReport extends StatelessWidget {
                                     }
                                   },
                                 );
-                              } else {
-                                if (!snapshot
-                                    .data()
-                                    .containsKey(formatDate())) {
-                                  await store
-                                      .collection('stock_eggs')
-                                      .doc(auth.currentUser.uid)
-                                      .update(
-                                    {
-                                      formatDate(): {
-                                        "eggsCollected": eggData.totalEggs,
-                                        "badEggs": eggData.totalBadEggs,
-                                        "goodEggs": eggData.totalGoodEggs,
-                                        "date": eggData.collectionDate,
-                                      }
-                                    },
-                                  );
-                                } else {
-                                  int newTotalEggsCollected =
-                                      snapshot.data()[formatDate()]
-                                              ["eggsCollected"] +
-                                          eggData.totalEggs;
-                                  int newTotalGoodEggs = snapshot
-                                          .data()[formatDate()]["goodEggs"] +
-                                      eggData.totalGoodEggs;
-                                  int newTotalBadEggs =
-                                      snapshot.data()[formatDate()]["badEggs"] +
-                                          eggData.totalBadEggs;
-                                  transaction.update(documentReference, {
-                                    "${formatDate()}.eggsCollected":
-                                        newTotalEggsCollected,
-                                    "${formatDate()}.badEggs": newTotalBadEggs,
-                                    "${formatDate()}.goodEggs":
-                                        newTotalGoodEggs,
-                                    "${formatDate()}.date":
-                                        eggData.collectionDate,
-                                  });
-                                }
+                              }
+                              // check if stock count has been done for the day
+                              else if (!snapshot
+                                  .data()
+                                  .containsKey(formatDate())) {
+                                print('2');
+                                transaction.update(
+                                  documentReference,
+                                  {
+                                    formatDate(): {
+                                      "eggsCollected": eggData.totalEggs,
+                                      "badEggs": eggData.totalBadEggs,
+                                      "goodEggs": eggData.totalGoodEggs,
+                                      "date": eggData.collectionDate,
+                                    }
+                                  },
+                                );
+                              }
+                              // check if stock count for the day is done, then update values
+                              else {
+                                print('3');
+                                int newTotalEggsCollected = snapshot
+                                        .data()[formatDate()]["eggsCollected"] +
+                                    eggData.totalEggs;
+                                int newTotalGoodEggs =
+                                    snapshot.data()[formatDate()]["goodEggs"] +
+                                        eggData.totalGoodEggs;
+                                int newTotalBadEggs =
+                                    snapshot.data()[formatDate()]["badEggs"] +
+                                        eggData.totalBadEggs;
+                                transaction.update(documentReference, {
+                                  "${formatDate()}.eggsCollected":
+                                      newTotalEggsCollected,
+                                  "${formatDate()}.badEggs": newTotalBadEggs,
+                                  "${formatDate()}.goodEggs": newTotalGoodEggs,
+                                  "${formatDate()}.date":
+                                      eggData.collectionDate,
+                                });
                               }
                             }).whenComplete(() async {
                               toaster("Stock count recorded");
@@ -233,3 +232,7 @@ class EggReport extends StatelessWidget {
     );
   }
 }
+
+// String monthStr = formatDate().substring(3, 5);
+//                             int month = int.parse(monthStr);
+//                             String formatMonth = months[month - 1];

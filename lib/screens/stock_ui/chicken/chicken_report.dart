@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
-import 'package:poultry/screens/stock_ui/batch_card.dart';
-import 'package:poultry/screens/stock_ui/modal_sheet.dart';
+import 'package:poultry/screens/stock_ui/chicken/batch_card.dart';
+import 'package:poultry/screens/stock_ui/chicken/modal_sheet.dart';
+
+import 'chicken_count.dart';
 
 class ChickenReport extends StatelessWidget {
   @override
@@ -81,7 +84,7 @@ class ChickenReport extends StatelessWidget {
                 ),
               ],
             ),
-            StreamBuilder(
+            StreamBuilder<DocumentSnapshot<Map>>(
               stream: store
                   .collection("stock_chickens")
                   .doc(auth.currentUser.uid)
@@ -89,7 +92,6 @@ class ChickenReport extends StatelessWidget {
               builder: (context, snapshot) {
                 List<Widget> chickenBatches = [];
                 if (snapshot.hasData) {
-                  print("check: ${snapshot.data.data() == null}");
                   if (snapshot.data.data() == null) {
                     chickenBatches.add(
                       Column(
@@ -117,12 +119,26 @@ class ChickenReport extends StatelessWidget {
                         final String birdType = batch["birdType"];
                         final int quantity = batch["quantity"];
                         final String startDate = batch["startDate"];
+                        print(batchName);
                         chickenBatches.add(
                           BatchCard(
                             batchName: batchName,
                             birdType: birdType,
                             quantity: quantity,
                             startDate: startDate,
+                            function: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChickenCount(
+                                    name: batchName,
+                                    birdType: birdType,
+                                    quantity: quantity,
+                                    startDate: startDate,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         );
                       }
