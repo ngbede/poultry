@@ -11,13 +11,8 @@ import 'package:provider/provider.dart';
 
 import '../../config/firebase.dart';
 
-class Login extends StatefulWidget {
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  GlobalKey<FormState> _signinFormkey = GlobalKey<FormState>();
+class Login extends StatelessWidget {
+  final GlobalKey<FormState> _signinFormkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
