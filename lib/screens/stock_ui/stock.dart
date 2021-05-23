@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/firebase.dart';
+import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/widgets/stock_card.dart';
 import 'package:provider/provider.dart';
-
-import '../../config/firebase.dart';
 
 class Stock extends StatefulWidget {
   @override
@@ -16,21 +16,33 @@ class Stock extends StatefulWidget {
 class _StockState extends State<Stock> {
   Future<void> updateStockUI() async {
     //store.collection("stock_eggs").doc(auth.currentUser.uid).snapshots();
-    DocumentReference documentReference =
+    DocumentReference documentRefEggs =
         store.collection('stock_eggs').doc(auth.currentUser.uid);
+    DocumentReference documentRefChickens =
+        store.collection('stock_chickens').doc(auth.currentUser.uid);
     store.runTransaction(
       (transaction) async {
-        DocumentSnapshot snapshot = await transaction.get(documentReference);
-        if (snapshot.data().containsKey(formatDate())) {
-          Provider.of<EggProv>(
-            context,
-            listen: false,
-          ).setPercent(1.0);
-        } else {
-          Provider.of<EggProv>(
-            context,
-            listen: false,
-          ).setPercent(0.0);
+        DocumentSnapshot<Map> eggSnapshot =
+            await transaction.get(documentRefEggs);
+        DocumentSnapshot<Map> chickenSnapshot =
+            await transaction.get(documentRefChickens);
+        if (eggSnapshot.exists) {
+          if (eggSnapshot.data().containsKey(formatDate())) {
+            Provider.of<EggProv>(
+              context,
+              listen: false,
+            ).setPercent(1.0);
+          } else {
+            Provider.of<EggProv>(
+              context,
+              listen: false,
+            ).setPercent(0.0);
+          }
+        }
+        if (chickenSnapshot.exists) {
+          Provider.of<BirdsProv>(context, listen: false).setNumberOfbatches(
+            chickenSnapshot.data().length,
+          );
         }
       },
     );
@@ -48,7 +60,7 @@ class _StockState extends State<Stock> {
       children: [
         StockCard(
           name: "Chickens",
-          itemCount: 2,
+          itemCount: Provider.of<BirdsProv>(context).batchCount,
           reportCategory: StockReport.chickens,
         ),
         StockCard(

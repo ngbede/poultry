@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poultry/screens/stock_ui/chicken_count.dart';
 import 'package:poultry/widgets/styles.dart';
 
 class BatchCard extends StatelessWidget {
@@ -7,25 +6,20 @@ class BatchCard extends StatelessWidget {
   final String birdType;
   final int quantity;
   final String startDate;
+  final Function function;
   BatchCard({
     @required this.batchName,
     @required this.birdType,
     @required this.quantity,
     @required this.startDate,
+    @required this.function,
   });
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChickenCount(),
-            ),
-          );
-        },
+        onTap: function,
         child: Card(
           elevation: 5,
           shape: RoundedRectangleBorder(
