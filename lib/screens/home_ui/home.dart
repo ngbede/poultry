@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:poultry/providers/layout_index.dart';
 import 'package:provider/provider.dart';
 
 // TODO: refactor home screen code
 class Home extends StatelessWidget {
-  final _formatCurrency = NumberFormat.simpleCurrency(name: "₦");
+  // final _formatCurrency = NumberFormat.simpleCurrency(name: "₦");
   final List<String> _cardTitles = [
-    "Total Sales",
+    //"Total Sales",
     "Total Chickens",
     "Eggs Collected"
   ];
   final List<String> _cardImages = [
-    "images/icons8-total-sales-100.png",
+    //  "images/icons8-total-sales-100.png",
     "images/icons8-chicken-100.png",
     "images/icons8-egg-100.png"
   ];
-  final List<dynamic> _cardValues = [100000, "423", "30"];
+  final List<dynamic> _cardValues = [
+    //  100000,
+    "423",
+    "30",
+  ];
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -97,9 +101,10 @@ class Home extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              (index == 0)
-                                  ? "${_formatCurrency.format(_cardValues[index])}"
-                                  : "${_cardValues[index]}",
+                              // (index == 0)
+                              //     ? "${_formatCurrency.format(_cardValues[index])}"
+                              //  :
+                              "${_cardValues[index]}",
                               style: TextStyle(
                                   fontSize: 25,
                                   color: Colors.white,
@@ -114,7 +119,7 @@ class Home extends StatelessWidget {
                 );
               },
               loop: false,
-              itemCount: 3,
+              itemCount: 2,
               viewportFraction: 0.8,
               scale: 0.8,
               pagination: SwiperPagination(
