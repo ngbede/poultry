@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/screens/stock_ui/chicken/batch_card.dart';
 import 'package:poultry/screens/stock_ui/chicken/modal_sheet.dart';
+import 'package:poultry/widgets/add_button.dart';
 
 import 'chicken_count.dart';
 
@@ -32,55 +32,16 @@ class ChickenReport extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: 150,
-                  child: Card(
-                    shadowColor: Colors.red,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Color(0XFF35D4C0),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(1.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Icon(
-                                FluentIcons.add_circle_20_regular,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return BatchSheet();
-                                    },
-                                  );
-                                },
-                                child: Text(
-                                  "New batch",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                AddButton(
+                  title: "New batch",
+                  function: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return BatchSheet();
+                      },
+                    );
+                  },
                 ),
               ],
             ),

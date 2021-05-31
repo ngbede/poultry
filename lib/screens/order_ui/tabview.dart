@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/widgets/add_button.dart';
 
 import '../../config/firebase.dart';
 import '../../widgets/orders_card.dart';
@@ -13,6 +14,18 @@ class OrderTabView extends StatelessWidget {
     return auth.currentUser != null
         ? Column(
             children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: AddButton(
+                    title: "Add order",
+                    function: () {
+                      print("Navigate to order form field");
+                    },
+                  ),
+                ),
+              ),
               StreamBuilder<DocumentSnapshot<Map>>(
                 stream: store
                     .collection("orders")
