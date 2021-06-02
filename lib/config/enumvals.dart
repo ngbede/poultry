@@ -15,6 +15,11 @@ enum FieldType {
   badEggs,
   batchName,
   batchQuantity,
+  customerName,
+  customerAddress,
+  customerContact,
+  crateOfEggPrice,
+  chickenPrice,
 }
 
 enum UserType {

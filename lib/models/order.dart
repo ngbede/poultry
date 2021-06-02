@@ -8,8 +8,13 @@ class Order {
   String customerID;
   String customerAddress;
   OrderStatus status;
-  int productCount;
   Map<String, Map<String, int>> products;
+  int productCount;
+  int cratesOfEggs;
+  int chickenCount;
+  double crateOfEggUnitPrice;
+  double chickenUnitPrice;
+  double totalPrice;
 
   Order({
     this.orderID,
@@ -21,5 +26,10 @@ class Order {
     this.productCount,
     this.products,
     this.status,
+    this.cratesOfEggs = 0,
+    this.chickenCount = 0,
+    this.chickenUnitPrice = 3500,
+    this.crateOfEggUnitPrice = 900,
+    this.totalPrice = 0,
   });
 }

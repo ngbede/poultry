@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:poultry/providers/order_prov.dart';
+import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
+import 'package:poultry/widgets/product_picker.dart';
+import 'package:poultry/widgets/styles.dart';
+import 'package:provider/provider.dart';
 
 import '../../config/enumvals.dart';
 
+// TODO: show total price of product value dynamically
 class OrderForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,248 +16,168 @@ class OrderForm extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0XFF35D4C0),
-          title: Text("Order: bw845"),
+          title: Text(
+            "Create new order",
+          ),
         ),
         body: ListView(
-          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
-              ),
+              padding: EdgeInsets.only(left: 19, bottom: 10, top: 10),
               child: Text(
-                "Products to be delivered",
+                "Customer details",
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+            InputField(
+              name: "Name",
+              keyboard: TextInputType.text,
+              fieldType: FieldType.customerName,
+            ),
+            InputField(
+              name: "Address",
+              keyboard: TextInputType.text,
+              fieldType: FieldType.customerAddress,
+            ),
+            InputField(
+              name: "Phone number",
+              keyboard: TextInputType.phone,
+              fieldType: FieldType.customerContact,
+            ),
             Padding(
-              padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
-                right: 10,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Crates of Eggs",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "On manifest: 5",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.badEggs,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
-                    ),
-                  ),
-                ],
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Divider(
+                thickness: 1,
+                color: Colors.black,
               ),
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
-                right: 10,
+                left: 20,
+                bottom: 10,
+                top: 10,
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Bags of fertilizer",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "On manifest: 5",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.badEggs,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
-                    ),
-                  ),
-                ],
+              child: Text(
+                "Products",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
+            ),
+            PickProduct(
+              title: "Crates of eggs",
+              additionFunction: () {
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).addCratesOfEggs();
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).calculateTotalPrice();
+              },
+              subtractionFunction: () {
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).subtractCratesOfEggs();
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).calculateTotalPrice();
+              },
+              adjustedValue: Provider.of<OrderProv>(
+                context,
+              ).cratesOfEggsCount,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            PickProduct(
+              title: "Chickens",
+              additionFunction: () {
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).addChicken();
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).calculateTotalPrice();
+              },
+              subtractionFunction: () {
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).subtractChicken();
+                Provider.of<OrderProv>(
+                  context,
+                  listen: false,
+                ).calculateTotalPrice();
+              },
+              adjustedValue: Provider.of<OrderProv>(
+                context,
+              ).chickenCount,
             ),
             Padding(
               padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
-                right: 10,
+                left: 20,
+                bottom: 10,
+                top: 5,
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Layers",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "On manifest: 5",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.badEggs,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
-                    ),
-                  ),
-                ],
+              child: Text(
+                "Crate of egg price ~ ₦900",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.grey,
+                  //fontSize: 15,
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
-                right: 10,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Broilers",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "On manifest: 5",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: InputField(
-                      keyboard: TextInputType.number,
-                      fieldType: FieldType.badEggs,
-                      rightPadding: 0,
-                      leftPadding: 50,
-                      bottomPadding: 0,
-                      topPadding: 5,
-                    ),
-                  ),
-                ],
+              padding: EdgeInsets.only(left: 20, bottom: 10),
+              child: Text(
+                "Price of chicken ~ ₦3500",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.grey,
+                  //fontSize: 15,
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                left: 10,
-                top: 15,
+              padding: EdgeInsets.only(left: 20, bottom: 10),
+              child: Text(
+                "Total Price = ₦ ${Provider.of<OrderProv>(context).totalPrice}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
-            Center(
-              child: Container(
-                width: 200,
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  color: Color(0XFF35D4C0),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 7.0,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Proceed   ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Icon(
-                          Icons.arrow_forward,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 100.0),
+              child: GestureDetector(
+                onTap: () {
+                  print(Provider.of<OrderProv>(context, listen: false)
+                      .customeName);
+                },
+                child: ActionButton(
+                  childWidget: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Create order",
+                        style: actionButtonStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
                 ),
               ),

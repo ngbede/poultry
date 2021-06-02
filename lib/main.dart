@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/data_prov.dart';
+import 'package:poultry/providers/order_prov.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/birds_prov.dart';
@@ -12,6 +14,7 @@ import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/widgets/scroll_behaviour.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,8 @@ void main() async {
     sslEnabled: false,
   );
   await auth.useEmulator(authHost);
+  // get shared_prefs instance
+  prefs = await SharedPreferences.getInstance();
   //print(auth.currentUser);
   runApp(
     MyApp(),
@@ -51,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<DataProv>(
           create: (_) => DataProv(),
+        ),
+        ChangeNotifierProvider<OrderProv>(
+          create: (_) => OrderProv(),
         ),
       ],
       child: MaterialApp(

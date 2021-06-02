@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:poultry/models/order.dart';
+import 'package:poultry/screens/stock_ui/chicken/chicken_count.dart';
 
 class OrderProv with ChangeNotifier {
   Order _order = Order();
@@ -44,6 +45,36 @@ class OrderProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void addCratesOfEggs() {
+    _order.cratesOfEggs += 1;
+    notifyListeners();
+  }
+
+  void subtractCratesOfEggs() {
+    if (_order.cratesOfEggs > 0) {
+      _order.cratesOfEggs -= 1;
+      notifyListeners();
+    }
+  }
+
+  void addChicken() {
+    _order.chickenCount += 1;
+    notifyListeners();
+  }
+
+  void subtractChicken() {
+    if (_order.chickenCount > 0) {
+      _order.chickenCount -= 1;
+      notifyListeners();
+    }
+  }
+
+  void calculateTotalPrice() {
+    _order.totalPrice = (_order.chickenUnitPrice * _order.chickenCount) +
+        (_order.cratesOfEggs * _order.crateOfEggUnitPrice);
+    notifyListeners();
+  }
+
   String get orderID => _order.orderID;
   String get orderDate => _order.orderDate;
   String get customeName => _order.customerName;
@@ -51,5 +82,8 @@ class OrderProv with ChangeNotifier {
   String get customerAddress => _order.customerAddress;
   String get customerContact => _order.contact;
   int get productCount => _order.productCount;
+  int get cratesOfEggsCount => _order.cratesOfEggs;
+  int get chickenCount => _order.chickenCount;
+  double get totalPrice => _order.totalPrice;
   Map<String, Map<String, int>> get products => _order.products;
 }
