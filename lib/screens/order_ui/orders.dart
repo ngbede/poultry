@@ -17,16 +17,13 @@ class Orders extends StatelessWidget {
             tabs: [
               Tab(
                 text: "OPEN",
-                //icon: Icon(FluentIcons.open_20_filled),
               ),
               Tab(
                 text: "CLOSED",
-                // icon: Icon(FluentIcons.closed_caption_off_20_regular),
               ),
             ],
           ),
         ),
-        // TODO: Stream all orders into the open and closed tab menu
         body: TabBarView(
           children: [
             OrderTabView(
