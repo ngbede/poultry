@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/screens/account_ui/account_cards.dart';
+import 'package:poultry/screens/account_ui/card_screens/price_screen.dart';
 
 class Account extends StatelessWidget {
   @override
@@ -13,6 +14,12 @@ class Account extends StatelessWidget {
           title: "Prices",
           hintText: "Adjust product prices",
           icon: FluentIcons.money_20_regular,
+          function: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PriceScreen(),
+            ),
+          ),
         ),
         AccountCard(
           title: "Settings",

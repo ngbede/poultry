@@ -5,6 +5,8 @@ import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/validatormsgs.dart';
 import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/farm_prov.dart';
+import 'package:poultry/providers/order_prov.dart';
+import 'package:poultry/providers/price_prov.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class InputField extends StatefulWidget {
   final FieldType fieldType;
   final bool iconVisible; // for the password field
   final int maxlen;
+  final double fontSize;
   final double leftPadding;
   final double rightPadding;
   final double topPadding;
@@ -31,6 +34,7 @@ class InputField extends StatefulWidget {
     this.rightPadding = 20.0,
     this.bottomPadding = 20.0,
     this.topPadding = 5.0,
+    this.fontSize,
   });
 
   @override
@@ -72,7 +76,8 @@ class _InputFieldState extends State<InputField> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     widget.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: widget.fontSize),
                     //textAlign: TextAlign.left,
                   ),
                 ),
@@ -89,7 +94,6 @@ class _InputFieldState extends State<InputField> {
             controller: _controller,
             validator: validatorMsg[widget.fieldType],
             onChanged: (value) {
-              //Provider.of<UserProv>(context, listen: false).getInfo();
               if (FieldType.firstName == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setFirstName(value);
@@ -149,6 +153,24 @@ class _InputFieldState extends State<InputField> {
               } else if (FieldType.batchQuantity == widget.fieldType) {
                 Provider.of<BirdsProv>(context, listen: false).setQuantity(
                   int.tryParse(value),
+                );
+              } else if (FieldType.customerName == widget.fieldType) {
+                Provider.of<OrderProv>(context, listen: false)
+                    .setCustomerName(value);
+              } else if (FieldType.customerAddress == widget.fieldType) {
+                Provider.of<OrderProv>(context, listen: false)
+                    .setCustomerAddress(value);
+              } else if (FieldType.customerContact == widget.fieldType) {
+                Provider.of<OrderProv>(context, listen: false)
+                    .setCustomerContact(value);
+              } else if (FieldType.crateOfEggPrice == widget.fieldType) {
+                Provider.of<PriceProv>(context, listen: false)
+                    .setCrateOfEggPrice(
+                  double.tryParse(value),
+                );
+              } else if (FieldType.chickenPrice == widget.fieldType) {
+                Provider.of<PriceProv>(context, listen: false).setChickenPrice(
+                  double.tryParse(value),
                 );
               }
             },

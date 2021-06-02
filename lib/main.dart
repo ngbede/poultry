@@ -4,6 +4,7 @@ import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/data_prov.dart';
 import 'package:poultry/providers/order_prov.dart';
+import 'package:poultry/providers/price_prov.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/birds_prov.dart';
@@ -59,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<OrderProv>(
           create: (_) => OrderProv(),
+        ),
+        ChangeNotifierProvider<PriceProv>(
+          create: (_) => PriceProv(),
         ),
       ],
       child: MaterialApp(
