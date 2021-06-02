@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/models/order.dart';
-import 'package:poultry/screens/stock_ui/chicken/chicken_count.dart';
 
 class OrderProv with ChangeNotifier {
   Order _order = Order();
@@ -70,8 +70,9 @@ class OrderProv with ChangeNotifier {
   }
 
   void calculateTotalPrice() {
-    _order.totalPrice = (_order.chickenUnitPrice * _order.chickenCount) +
-        (_order.cratesOfEggs * _order.crateOfEggUnitPrice);
+    _order.totalPrice =
+        (prefs.getDouble("chickenUnitPrice") * _order.chickenCount) +
+            (prefs.getDouble("crateOfEggUnitPrice") * _order.cratesOfEggs);
     notifyListeners();
   }
 

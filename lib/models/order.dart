@@ -28,8 +28,8 @@ class Order {
     this.status,
     this.cratesOfEggs = 0,
     this.chickenCount = 0,
-    this.chickenUnitPrice = 3500,
-    this.crateOfEggUnitPrice = 900,
+    this.chickenUnitPrice = 0,
+    this.crateOfEggUnitPrice = 0,
     this.totalPrice = 0,
   });
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/screens/order_ui/order_form.dart';
 import 'package:poultry/widgets/add_button.dart';
 
 import '../../config/firebase.dart';
@@ -21,6 +22,12 @@ class OrderTabView extends StatelessWidget {
                   child: AddButton(
                     title: "Add order",
                     function: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OrderForm(),
+                        ),
+                      );
                       print("Navigate to order form field");
                     },
                   ),

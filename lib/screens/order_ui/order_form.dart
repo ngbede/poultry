@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/order_prov.dart';
 import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
@@ -130,7 +131,7 @@ class OrderForm extends StatelessWidget {
                 top: 5,
               ),
               child: Text(
-                "Crate of egg price ~ ₦900",
+                "Crate of egg price ~ ₦ ${prefs.getDouble("crateOfEggUnitPrice")}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold, color: Colors.grey,
                   //fontSize: 15,
@@ -140,7 +141,7 @@ class OrderForm extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10),
               child: Text(
-                "Price of chicken ~ ₦3500",
+                "Price of chicken ~ ₦${prefs.getDouble("chickenUnitPrice")}",
                 style: TextStyle(
                   fontWeight: FontWeight.bold, color: Colors.grey,
                   //fontSize: 15,
