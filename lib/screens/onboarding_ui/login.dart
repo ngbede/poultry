@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/shared_pref.dart';
+import 'package:poultry/providers/layout_index.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:poultry/screens/onboarding_ui/signup.dart';
@@ -69,7 +71,10 @@ class Login extends StatelessWidget {
                                     .password,
                           );
                           if (_user != null) {
+                            prefs.setString("userID", "${_user.user.uid}");
                             _progress.dismiss();
+                            Provider.of<LayoutIndexProv>(context, listen: false)
+                                .onTapChangeScreen(0);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

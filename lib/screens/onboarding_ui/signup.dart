@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/user_prov.dart';
@@ -134,6 +135,7 @@ class Signup extends StatelessWidget {
                                 ).phoneNumber,
                               },
                             );
+                            prefs.setString("userID", "${_user.user.uid}");
                             _progress.dismiss();
                             Navigator.push(
                               context,

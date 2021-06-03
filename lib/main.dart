@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           // primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Login(),
+        home: prefs.getString("userID") == null ? Login() : Layout(),
       ),
     );
   }
