@@ -6,6 +6,8 @@ import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:poultry/widgets/styles.dart';
 import 'package:provider/provider.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../layout.dart';
 
 class PriceScreen extends StatelessWidget {
   @override
@@ -62,42 +64,72 @@ class PriceScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  if (Provider.of<PriceProv>(context, listen: false)
-                          .cratePrice >
-                      0) {
-                    setEggPrice(Provider.of<PriceProv>(context, listen: false)
-                        .cratePrice);
-                  }
-                  if (Provider.of<PriceProv>(context, listen: false)
-                          .chickenPrice >
-                      0) {
-                    setChickenPrice(
-                        Provider.of<PriceProv>(context, listen: false)
-                            .chickenPrice);
-                  }
-                  Navigator.pop(context);
-                },
-                child: ActionButton(
-                  childWidget: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Save prices",
-                        style: actionButtonStyle,
-                        textAlign: TextAlign.center,
-                      ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                      )
-                    ],
+            Consumer<PriceProv>(builder: (context, priceData, child) {
+              return Center(
+                child: GestureDetector(
+                  onTap: () {
+                    int changes = 0;
+                    if (priceData.cratePrice > 0) {
+                      setEggPrice(priceData.cratePrice);
+                      changes += 1;
+                    }
+                    if (priceData.chickenPrice > 0) {
+                      setChickenPrice(priceData.chickenPrice);
+                      changes += 1;
+                    }
+                    Alert(
+                      context: context,
+                      type: AlertType.success,
+                      title: "Summary",
+                      desc: changes == 0
+                          ? "$changes changes made"
+                          : (changes == 1) && (priceData.chickenPrice > 0)
+                              ? "$changes change made\n1 Chicken ~ ₦${prefs.getDouble("chickenUnitPrice")}"
+                              : (changes == 2)
+                                  ? "$changes changes made\n1 Chicken ~ ₦${prefs.getDouble("chickenUnitPrice")}\n1 Crate of egg ~ ₦${prefs.getDouble("crateOfEggUnitPrice")}"
+                                  : "$changes change made\n1 Crate of egg ~ ₦${prefs.getDouble("crateOfEggUnitPrice")}",
+                      buttons: [
+                        DialogButton(
+                          color: Color(0XFF35D4C0),
+                          child: Text(
+                            "Proceed",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                          onPressed: () {
+                            changes = 0;
+                            priceData.setChickenPrice(0);
+                            priceData.setCrateOfEggPrice(0);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Layout(),
+                              ),
+                            );
+                          },
+                          width: 120,
+                        ),
+                      ],
+                    ).show();
+                  },
+                  child: ActionButton(
+                    childWidget: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Save prices",
+                          style: actionButtonStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),
