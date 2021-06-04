@@ -164,14 +164,25 @@ class _InputFieldState extends State<InputField> {
                 Provider.of<OrderProv>(context, listen: false)
                     .setCustomerContact(value);
               } else if (FieldType.crateOfEggPrice == widget.fieldType) {
-                Provider.of<PriceProv>(context, listen: false)
-                    .setCrateOfEggPrice(
-                  double.tryParse(value),
-                );
+                if (value.isEmpty) {
+                  Provider.of<PriceProv>(context, listen: false)
+                      .setCrateOfEggPrice(0);
+                } else {
+                  Provider.of<PriceProv>(context, listen: false)
+                      .setCrateOfEggPrice(
+                    double.tryParse(value),
+                  );
+                }
               } else if (FieldType.chickenPrice == widget.fieldType) {
-                Provider.of<PriceProv>(context, listen: false).setChickenPrice(
-                  double.tryParse(value),
-                );
+                if (value.isEmpty) {
+                  Provider.of<PriceProv>(context, listen: false)
+                      .setChickenPrice(0);
+                } else {
+                  Provider.of<PriceProv>(context, listen: false)
+                      .setChickenPrice(
+                    double.tryParse(value),
+                  );
+                }
               }
             },
             maxLength: widget.maxlen,

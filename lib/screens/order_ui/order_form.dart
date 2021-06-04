@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/order_prov.dart';
+import 'package:poultry/screens/account_ui/card_screens/price_screen.dart';
 import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:poultry/widgets/product_picker.dart';
@@ -111,15 +112,44 @@ class OrderForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, bottom: 10),
-                  child: Text(
-                    "Price of chicken ~ ₦${prefs.getDouble("chickenUnitPrice")}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.grey,
-                      //fontSize: 15,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, bottom: 10),
+                      child: Text(
+                        "Price of chicken ~ ₦${prefs.getDouble("chickenUnitPrice")}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.grey,
+                          //fontSize: 15,
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 20, bottom: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PriceScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          "Adjust prices",
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueAccent,
+                            wordSpacing: 2,
+                            letterSpacing: 1,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 20, bottom: 10),
