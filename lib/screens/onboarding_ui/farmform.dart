@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:poultry/config/constants.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/widgets/inputfield.dart';
-import 'package:poultry/widgets/state_picker.dart';
+import 'package:poultry/widgets/picker.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:provider/provider.dart';
 
@@ -60,7 +61,47 @@ class _FarmFormState extends State<FarmForm> {
                       ),
                       Expanded(
                         flex: 2,
-                        child: statePicker(context),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 35.0, right: 20.0),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "State",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  //textAlign: TextAlign.left,`
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 20.0,
+                                    top: 5,
+                                    bottom: 20,
+                                    right: 20.0),
+                                child: customPicker(
+                                  context,
+                                  nigerianStates,
+                                  Color(0XFFEAE9EB),
+                                  Provider.of<FarmProv>(context).state,
+                                  (value) {
+                                    Provider.of<FarmProv>(context,
+                                            listen: false)
+                                        .setState(
+                                      value,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -153,7 +194,7 @@ class _FarmFormState extends State<FarmForm> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Card(
-                        color: Colors.green[400],
+                        color: Color(0XFF35D4C0),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
