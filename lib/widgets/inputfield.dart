@@ -94,12 +94,8 @@ class _InputFieldState extends State<InputField> {
             controller: _controller,
             validator: validatorMsg[widget.fieldType],
             onChanged: (value) {
-              if (FieldType.firstName == widget.fieldType) {
-                Provider.of<UserProv>(context, listen: false)
-                    .setFirstName(value);
-              } else if (FieldType.lastName == widget.fieldType) {
-                Provider.of<UserProv>(context, listen: false)
-                    .setLastName(value);
+              if (FieldType.name == widget.fieldType) {
+                Provider.of<UserProv>(context, listen: false).setName(value);
               } else if (FieldType.email == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false).setEmail(value);
               } else if (FieldType.phone == widget.fieldType) {

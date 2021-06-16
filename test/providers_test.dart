@@ -1,5 +1,4 @@
 import 'package:poultry/config/enumvals.dart';
-import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/providers/order_prov.dart';
@@ -13,19 +12,14 @@ void main() {
     () {
       test("\nUserProv class tests", () {
         UserProv user = UserProv();
-        user.setFirstName("Emmanuel");
+        user.setName("Emmanuel");
         user.setEmail("fake@gmail.com");
-        user.setLastName("Sule");
         user.setPassword("password");
         user.setPhoneNumber("08012345678");
         user.setUserRole(UserType.farmer);
         expect(
-          user.firstName,
+          user.name,
           equals("Emmanuel"),
-        );
-        expect(
-          user.lastname,
-          equals("Sule"),
         );
         expect(
           user.email,

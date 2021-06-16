@@ -4,6 +4,7 @@ import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/screens/layout.dart';
+import 'package:poultry/screens/onboarding_ui/farmform.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
 import 'package:poultry/providers/user_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,16 +44,16 @@ class Signup extends StatelessWidget {
                     ),
                   ),
                   InputField(
-                    name: "First name",
+                    name: "Name",
                     keyboard: TextInputType.text,
-                    fieldType: FieldType.firstName,
+                    fieldType: FieldType.name,
                     //onSaved: ,
                   ),
-                  InputField(
-                    name: "Last name",
-                    keyboard: TextInputType.text,
-                    fieldType: FieldType.lastName,
-                  ),
+                  // InputField(
+                  //   name: "Last name",
+                  //   keyboard: TextInputType.text,
+                  //   fieldType: FieldType.lastName,
+                  // ),
                   InputField(
                     name: "Email address",
                     keyboard: TextInputType.emailAddress,
@@ -117,14 +118,10 @@ class Signup extends StatelessWidget {
                                   listen: false,
                                 ).email,
                                 "userId": _user.user.uid,
-                                "firstName": Provider.of<UserProv>(
+                                "name": Provider.of<UserProv>(
                                   context,
                                   listen: false,
-                                ).firstName,
-                                "lastName": Provider.of<UserProv>(
-                                  context,
-                                  listen: false,
-                                ).lastname,
+                                ).name,
                                 "userRole": _roleStr[Provider.of<UserProv>(
                                         context,
                                         listen: false)
@@ -140,7 +137,7 @@ class Signup extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Layout(),
+                                builder: (context) => FarmForm(),
                               ),
                             );
                             print("Signup successful");

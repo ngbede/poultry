@@ -1,6 +1,5 @@
 enum FieldType {
-  firstName,
-  lastName,
+  name,
   email,
   password,
   phone,

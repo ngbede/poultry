@@ -22,14 +22,9 @@ Map<FieldType, MultiValidator> validatorMsg = {
       MinLengthValidator(11, errorText: "phone number must be 11 digits long"),
     ],
   ),
-  FieldType.firstName: MultiValidator(
+  FieldType.name: MultiValidator(
     [
-      RequiredValidator(errorText: "first name is a required field"),
-    ],
-  ),
-  FieldType.lastName: MultiValidator(
-    [
-      RequiredValidator(errorText: "last name is a required field"),
+      RequiredValidator(errorText: "Name is a required field"),
     ],
   ),
   FieldType.farmName: MultiValidator(
