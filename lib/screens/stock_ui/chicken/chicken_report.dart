@@ -76,18 +76,22 @@ class ChickenReport extends StatelessWidget {
                   } else {
                     Map data = snapshot.data.data();
                     if (data.isNotEmpty) {
-                      final batchList = snapshot.data.data().values;
+                      final batchList = data.values;
+                      final List<String> batchIDs = data.keys.toList();
+                      int idx = 0;
                       for (var batch in batchList) {
                         final String batchName = batch["batchName"];
                         final String birdType = batch["birdType"];
                         final int quantity = batch["quantity"];
                         final String startDate = batch["startDate"];
-                        print(batchName);
+                        final String batchID = batchIDs[idx];
+                        idx++;
                         chickenBatches.add(
                           BatchCard(
                             batchName: batchName,
                             birdType: birdType,
                             quantity: quantity,
+                            batchID: batchID,
                             startDate: startDate,
                             function: () {
                               Provider.of<BirdsProv>(context, listen: false)

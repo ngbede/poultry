@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:poultry/widgets/styles.dart';
+import 'package:poultry/widgets/batch_card_fields.dart';
 
 class BatchCard extends StatelessWidget {
   final String batchName;
   final String birdType;
   final int quantity;
   final String startDate;
+  final String batchID;
   final Function function;
   BatchCard({
     @required this.batchName,
     @required this.birdType,
     @required this.quantity,
     @required this.startDate,
+    @required this.batchID,
     @required this.function,
   });
   @override
@@ -40,87 +42,23 @@ class BatchCard extends StatelessWidget {
               SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Batch Name:",
-                      style: batchCardLeadingText,
-                    ),
-                    Text(
-                      batchName,
-                      style: batchCardTrailingText,
-                    ),
-                  ],
-                ),
-              ),
+              BatchCardFields(title: "Batch Name:", info: batchName),
               SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Bird Type: ",
-                      style: batchCardLeadingText,
-                    ),
-                    Text(
-                      birdType,
-                      style: batchCardTrailingText,
-                    ),
-                  ],
-                ),
-              ),
+              BatchCardFields(title: "Bird Type:", info: birdType),
               SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Quantity: ",
-                      style: batchCardLeadingText,
-                    ),
-                    Text(
-                      "$quantity",
-                      style: batchCardTrailingText,
-                    ),
-                  ],
-                ),
-              ),
+              BatchCardFields(title: "Quantity:", info: "$quantity"),
               SizedBox(
                 height: 5,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Start Date: ",
-                      style: batchCardLeadingText,
-                    ),
-                    Text(
-                      startDate,
-                      style: batchCardTrailingText,
-                    ),
-                  ],
-                ),
+              BatchCardFields(title: "Start Date:", info: startDate),
+              SizedBox(
+                height: 5,
               ),
+              BatchCardFields(title: "Batch ID:", info: batchID),
               SizedBox(
                 height: 10,
               ),
