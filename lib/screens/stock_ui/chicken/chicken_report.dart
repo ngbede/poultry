@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/screens/stock_ui/chicken/batch_card.dart';
 import 'package:poultry/screens/stock_ui/chicken/modal_sheet.dart';
 import 'package:poultry/widgets/add_button.dart';
+import 'package:provider/provider.dart';
 
 import 'chicken_count.dart';
 
@@ -88,6 +90,8 @@ class ChickenReport extends StatelessWidget {
                             quantity: quantity,
                             startDate: startDate,
                             function: () {
+                              Provider.of<BirdsProv>(context, listen: false)
+                                  .setQuantity(quantity);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -64,7 +64,9 @@ class _InputFieldState extends State<InputField> {
         widget.fieldType == FieldType.eggsCollected ||
                 widget.fieldType == FieldType.badEggs ||
                 widget.fieldType == FieldType.batchQuantity ||
-                widget.fieldType == FieldType.batchName
+                widget.fieldType == FieldType.batchName ||
+                widget.fieldType == FieldType.deadBirds ||
+                widget.fieldType == FieldType.comment
             ? SizedBox(
                 height: 0,
               )
@@ -179,6 +181,19 @@ class _InputFieldState extends State<InputField> {
                     double.tryParse(value),
                   );
                 }
+              } else if (FieldType.deadBirds == widget.fieldType) {
+                if (value.isEmpty) {
+                  Provider.of<BirdsProv>(context, listen: false)
+                      .setDeadBirds(0);
+                } else {
+                  Provider.of<BirdsProv>(context, listen: false).setDeadBirds(
+                    int.tryParse(value),
+                  );
+                }
+                Provider.of<BirdsProv>(context, listen: false).setBirdsAlive();
+              } else if (FieldType.comment == widget.fieldType) {
+                Provider.of<BirdsProv>(context, listen: false)
+                    .setComment(value);
               }
             },
             maxLength: widget.maxlen,
@@ -222,10 +237,12 @@ class _InputFieldState extends State<InputField> {
               focusedBorder: widget.fieldType == FieldType.eggsCollected ||
                       widget.fieldType == FieldType.badEggs ||
                       widget.fieldType == FieldType.batchQuantity ||
-                      widget.fieldType == FieldType.batchName
+                      widget.fieldType == FieldType.batchName ||
+                      widget.fieldType == FieldType.deadBirds
                   ? UnderlineInputBorder(
                       borderSide: BorderSide(
-                        color: widget.fieldType == FieldType.badEggs
+                        color: widget.fieldType == FieldType.badEggs ||
+                                widget.fieldType == FieldType.deadBirds
                             ? Colors.red
                             : Colors.green,
                       ),

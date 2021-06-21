@@ -14,8 +14,27 @@ class BirdsProv with ChangeNotifier {
     notifyListeners();
   }
 
+  // chicken count methods
   void setQuantity(int count) {
     _birdBatch.quantity = count;
+    _birdBatch.aliveBirds = count;
+    notifyListeners();
+  }
+
+  void setDeadBirds(int value) {
+    if (_birdBatch.quantity >= value) {
+      _birdBatch.deadBirds = value;
+      // _birdBatch.quantity -= value;
+      notifyListeners();
+    }
+  }
+
+  void setBirdsAlive() {
+    if (_birdBatch.deadBirds == 0) {
+      _birdBatch.aliveBirds = _birdBatch.quantity;
+    } else {
+      _birdBatch.aliveBirds = _birdBatch.quantity - _birdBatch.deadBirds;
+    }
     notifyListeners();
   }
 
@@ -36,6 +55,11 @@ class BirdsProv with ChangeNotifier {
 
   void setYear(String year) {
     _birdBatch.year = year;
+    notifyListeners();
+  }
+
+  void setComment(String comment) {
+    _birdBatch.comment = comment;
     notifyListeners();
   }
 
@@ -63,5 +87,8 @@ class BirdsProv with ChangeNotifier {
   String get startMonth => _birdBatch.month;
   String get startDay => _birdBatch.day;
   String get startYear => _birdBatch.year;
+  String get comment => _birdBatch.comment;
   int get batchCount => _birdBatch.batchCount;
+  int get deadBirds => _birdBatch.deadBirds;
+  int get aliveBirds => _birdBatch.aliveBirds;
 }

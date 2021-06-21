@@ -19,6 +19,8 @@ enum FieldType {
   customerContact,
   crateOfEggPrice,
   chickenPrice,
+  deadBirds,
+  comment,
 }
 
 enum UserType {
