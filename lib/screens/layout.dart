@@ -17,7 +17,7 @@ class _LayoutState extends State<Layout> {
     Home(),
     Stock(),
     Orders(),
-    Analytics(),
+    //  Analytics(),
     Account(),
   ];
 
@@ -46,10 +46,10 @@ class _LayoutState extends State<Layout> {
               icon: Icon(Icons.local_shipping_sharp),
               label: "Orders",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_sharp),
-              label: "Analytics",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.bar_chart_sharp),
+            //   label: "Analytics",
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: "Account",
