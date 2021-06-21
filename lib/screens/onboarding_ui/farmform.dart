@@ -3,11 +3,13 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/constants.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/farm_prov.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:poultry/widgets/picker.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/widgets/toast.dart';
 import 'package:provider/provider.dart';
 
 class FarmForm extends StatefulWidget {
@@ -32,7 +34,7 @@ class _FarmFormState extends State<FarmForm> {
                     padding:
                         const EdgeInsets.only(left: 20, bottom: 20, top: 20),
                     child: Text(
-                      "Setup your poultry farm",
+                      "Farm Details",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 25,
@@ -125,15 +127,39 @@ class _FarmFormState extends State<FarmForm> {
                       ),
                     ],
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InputField(
+                          name: "Crate of Egg unit price",
+                          keyboard: TextInputType.number,
+                          fieldType: FieldType.crateOfEggPrice,
+                          //rightPadding: 20,
+                          maxlen: 4,
+                          fontSize: 17,
+                        ),
+                      ),
+                      Expanded(
+                        child: InputField(
+                          name: "Chicken unit price",
+                          keyboard: TextInputType.number,
+                          fieldType: FieldType.chickenPrice,
+                          // rightPadding: 20,
+                          maxlen: 4,
+                          fontSize: 17,
+                        ),
+                      ),
+                    ],
+                  ),
                   GestureDetector(
                     onTap: () async {
                       final _progress = ProgressHUD.of(context);
                       if (_farmFormKey.currentState.validate()) {
                         _progress.showWithText("Registering farm...");
                         try {
-                          await Future.delayed(
-                            Duration(seconds: 3),
-                          ); // simulate progress
+                          // await Future.delayed(
+                          //   Duration(seconds: 3),
+                          // ); // simulate progress
                           await store
                               .collection("farmers")
                               .doc(auth.currentUser.uid)
@@ -170,6 +196,13 @@ class _FarmFormState extends State<FarmForm> {
                               ),
                             },
                           );
+                          prefs.setString(
+                            "farmName",
+                            Provider.of<FarmProv>(
+                              context,
+                              listen: false,
+                            ).farmName,
+                          );
                           _progress.dismiss();
                           Navigator.push(
                             context,
@@ -179,27 +212,25 @@ class _FarmFormState extends State<FarmForm> {
                           );
                         } catch (e) {
                           _progress.dismiss();
-                          Fluttertoast.showToast(
-                            msg: "${e.code}",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.teal,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          toaster(e.code);
                         }
                       }
                     },
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0,
+                        vertical: 5,
+                      ),
                       child: Card(
                         color: Color(0XFF35D4C0),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
-                            "Create Farm",
-                            style: TextStyle(color: Colors.white),
+                            "Register Farm",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),

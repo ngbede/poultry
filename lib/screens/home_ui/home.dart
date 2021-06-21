@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:poultry/config/shared_pref.dart';
 //import 'package:intl/intl.dart';
 import 'package:poultry/providers/layout_index.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,7 @@ class Home extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    "Destiny Poultry Farm",
+                    "${prefs.getString("farmName")}",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -101,9 +102,6 @@ class Home extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              // (index == 0)
-                              //     ? "${_formatCurrency.format(_cardValues[index])}"
-                              //  :
                               "${_cardValues[index]}",
                               style: TextStyle(
                                   fontSize: 25,
