@@ -103,7 +103,7 @@ class ChickenReport extends StatelessWidget {
                                     name: batchName,
                                     birdType: birdType,
                                     quantity: quantity,
-                                    startDate: startDate,
+                                    batchID: batchID,
                                   ),
                                 ),
                               );

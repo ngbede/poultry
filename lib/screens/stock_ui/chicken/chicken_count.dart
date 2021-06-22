@@ -14,12 +14,12 @@ class ChickenCount extends StatelessWidget {
   final String name;
   final String birdType;
   final int quantity;
-  final String startDate;
+  final String batchID;
   ChickenCount({
     @required this.name,
     @required this.birdType,
     @required this.quantity,
-    @required this.startDate,
+    @required this.batchID,
   });
   @override
   Widget build(BuildContext context) {
@@ -157,24 +157,51 @@ class ChickenCount extends StatelessWidget {
                       Expanded(
                         child: GestureDetector(
                           onTap: () async {
-                            print(birdData.comment);
-                            print(birdData.aliveBirds);
-                            print(birdData.deadBirds);
-                            print(birdData.batchQuantity);
                             DocumentSnapshot<Map> data = await store
                                 .collection("stock_chickens")
                                 .doc(auth.currentUser.uid)
                                 .get();
-                            print(data.data());
-                            // store.runTransaction(
-                            //   (transaction) async {
-                            //     DocumentSnapshot<Map> snapshot =
-                            //         await transaction.get(store
-                            //             .collection("stock_chickens")
-                            //             .doc(auth.currentUser.uid));
-                            //     print(snapshot);
-                            //   },
-                            // );
+                            Map stockMap = data.data()[batchID]["stock"];
+                            String date = formatDate();
+                            DocumentReference batchRef = store
+                                .collection("stock_chickens")
+                                .doc(auth.currentUser.uid);
+                            print(data.data()[batchID]["stock"]);
+                            // check if stock for day doesn't exist
+                            if (!stockMap.containsKey(date)) {
+                              stockMap[date] = {
+                                "date": todaysDate,
+                                "deadBirds": birdData.deadBirds,
+                                "aliveBirds": birdData.aliveBirds,
+                                "comment": birdData.comment,
+                              };
+                              print(stockMap);
+                              await batchRef.update({
+                                "$batchID.quantity": birdData.aliveBirds,
+                                "$batchID.stock": stockMap,
+                              }).whenComplete(() {
+                                birdData.setDeadBirds(0);
+                                birdData.setComment("");
+                                Navigator.pop(context);
+                              });
+                            } else {
+                              // if stock count for day exist, update count
+                              int deadBirds = stockMap[date]["deadBirds"] +
+                                  birdData.deadBirds;
+                              int aliveBirds = stockMap[date]["aliveBirds"] -
+                                  birdData.deadBirds;
+                              await batchRef.update({
+                                "$batchID.quantity": birdData.aliveBirds,
+                                "$batchID.stock.$date.deadBirds": deadBirds,
+                                "$batchID.stock.$date.comment":
+                                    birdData.comment,
+                                "$batchID.stock.$date.aliveBirds": aliveBirds,
+                              }).whenComplete(() {
+                                birdData.setDeadBirds(0);
+                                birdData.setComment("");
+                                Navigator.pop(context);
+                              });
+                            }
                           },
                           child: ActionButton(
                             childWidget: Text(
