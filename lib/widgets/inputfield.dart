@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/validatormsgs.dart';
 import 'package:poultry/providers/birds_prov.dart';
@@ -15,6 +16,7 @@ class InputField extends StatefulWidget {
   final String name;
   final TextInputType keyboard;
   final Function onSaved;
+  final bool validateField;
   final FieldType fieldType;
   final bool iconVisible; // for the password field
   final int maxlen;
@@ -28,6 +30,7 @@ class InputField extends StatefulWidget {
     @required this.keyboard,
     @required this.fieldType,
     this.onSaved,
+    this.validateField = true,
     this.iconVisible = false,
     this.maxlen,
     this.leftPadding = 20.0,
@@ -94,7 +97,11 @@ class _InputFieldState extends State<InputField> {
           child: TextFormField(
             // autofocus: true,
             controller: _controller,
-            validator: validatorMsg[widget.fieldType],
+            validator: widget.validateField
+                ? MultiValidator(
+                    errorMessages(widget.fieldType, widget.name.toLowerCase()),
+                  )
+                : null,
             onChanged: (value) {
               if (FieldType.name == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false).setName(value);

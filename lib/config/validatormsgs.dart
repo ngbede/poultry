@@ -1,57 +1,28 @@
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:poultry/config/enumvals.dart';
 
-// COntains all form field validation messages to be used in inputfield
-Map<FieldType, MultiValidator> validatorMsg = {
-  FieldType.email: MultiValidator(
-    [
-      RequiredValidator(errorText: "email is a required field"),
-      EmailValidator(errorText: "invalid email"),
-    ],
-  ),
-  FieldType.password: MultiValidator(
-    [
-      RequiredValidator(errorText: "password is a required field"),
-      MinLengthValidator(6,
-          errorText: "password must be at least 6 digits long"),
-    ],
-  ),
-  FieldType.phone: MultiValidator(
-    [
-      RequiredValidator(errorText: "phone number is a required field"),
-      MinLengthValidator(11, errorText: "phone number must be 11 digits long"),
-    ],
-  ),
-  FieldType.name: MultiValidator(
-    [
-      RequiredValidator(errorText: "Name is a required field"),
-    ],
-  ),
-  FieldType.farmName: MultiValidator(
-    [
-      RequiredValidator(errorText: "farm name is a required field"),
-    ],
-  ),
-  FieldType.address: MultiValidator(
-    [
-      RequiredValidator(errorText: "address is a required field"),
-    ],
-  ),
-  FieldType.numberOfBroilers: MultiValidator(
-    [
-      RequiredValidator(errorText: "*required field"),
-      RangeValidator(min: 0, max: 10000, errorText: "10,000 max")
-    ],
-  ),
-  FieldType.numberOfLayers: MultiValidator(
-    [
-      RequiredValidator(errorText: "*required field"),
-      RangeValidator(min: 0, max: 10000, errorText: "10,000 max")
-    ],
-  ),
-  FieldType.lga: MultiValidator(
-    [
-      RequiredValidator(errorText: "LGA is a required field"),
-    ],
-  ),
-};
+// Contains all form field validation messages to be used in inputfield
+List<FieldValidator<dynamic>> errorMessages(
+  FieldType formField,
+  String text,
+) {
+  List<FieldValidator<dynamic>> messages = [
+    RequiredValidator(errorText: "$text is a required field")
+  ];
+  if (formField == FieldType.password) {
+    messages.add(
+      MinLengthValidator(6, errorText: "$text must be 6 digits long"),
+    );
+  } else if (formField == FieldType.email) {
+    messages.add(
+      EmailValidator(
+        errorText: "invalid $text",
+      ),
+    );
+  } else if (formField == FieldType.phone) {
+    messages.add(
+      MinLengthValidator(11, errorText: "$text must be 11 digits long"),
+    );
+  }
+  return messages;
+}
