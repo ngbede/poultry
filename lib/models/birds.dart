@@ -10,6 +10,7 @@ class Birds {
   String year;
   String comment;
   int batchCount;
+  int bacthesCounted;
 
   Birds({
     this.batchName = "",
@@ -20,6 +21,7 @@ class Birds {
     this.day = "1",
     this.year = "2021",
     this.batchCount = 0,
+    this.bacthesCounted = 0,
     this.deadBirds = 0,
     this.comment = "",
     this.aliveBirds,

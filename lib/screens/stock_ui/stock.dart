@@ -7,13 +7,13 @@ import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/widgets/stock_card.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class Stock extends StatefulWidget {
   @override
   _StockState createState() => _StockState();
 }
 
-// TODO: Fix async suspension error that occurs with transaction
 class _StockState extends State<Stock> {
   Future<void> updateStockUI() async {
     DocumentReference documentRefEggs =
@@ -39,6 +39,15 @@ class _StockState extends State<Stock> {
         }
       }
       if (chickenSnapshot.exists) {
+        int batchesCounted = 0;
+        for (var batch in chickenSnapshot.data().keys) {
+          Map stock = chickenSnapshot.data()[batch]["stock"];
+          if (stock.containsKey(formatDate())) {
+            batchesCounted++;
+          }
+        }
+        Provider.of<BirdsProv>(context, listen: false)
+            .setBatchesCounted(batchesCounted);
         Provider.of<BirdsProv>(context, listen: false).setNumberOfbatches(
           chickenSnapshot.data().length,
         );
@@ -65,7 +74,9 @@ class _StockState extends State<Stock> {
             StockCard(
               name: "Chickens",
               itemCount: Provider.of<BirdsProv>(context).batchCount,
+              itemsCounted: Provider.of<BirdsProv>(context).batchesCounted,
               reportCategory: StockReport.chickens,
+              completionRate: Provider.of<BirdsProv>(context).getStockPercent(),
             ),
             StockCard(
               name: "Eggs",

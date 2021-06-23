@@ -22,6 +22,8 @@ class StockCard extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    final double rate = completionRate * 100;
+    final String percentage = rate.toStringAsPrecision(3);
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 5,
@@ -84,7 +86,7 @@ class StockCard extends StatelessWidget {
                 animation: true,
                 percent: completionRate,
                 center: Text(
-                  "${completionRate * 100} %",
+                  "$percentage %",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,

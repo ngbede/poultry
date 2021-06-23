@@ -69,6 +69,16 @@ class BirdsProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void setBatchesCounted(int count) {
+    _birdBatch.bacthesCounted = count;
+    notifyListeners();
+  }
+
+  double getStockPercent() {
+    double percentage = _birdBatch.bacthesCounted / _birdBatch.batchCount;
+    return percentage;
+  }
+
   void resetValues() {
     _birdBatch.batchName = "";
     _birdBatch.quantity = 0;
@@ -89,6 +99,7 @@ class BirdsProv with ChangeNotifier {
   String get startYear => _birdBatch.year;
   String get comment => _birdBatch.comment;
   int get batchCount => _birdBatch.batchCount;
+  int get batchesCounted => _birdBatch.bacthesCounted;
   int get deadBirds => _birdBatch.deadBirds;
   int get aliveBirds => _birdBatch.aliveBirds;
 }
