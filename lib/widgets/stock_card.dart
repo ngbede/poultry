@@ -24,6 +24,8 @@ class StockCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double rate = completionRate * 100;
     final String percentage = rate.toStringAsPrecision(3);
+    print("Rate: $rate");
+    print("Percentage: $percentage");
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 5,
@@ -86,7 +88,7 @@ class StockCard extends StatelessWidget {
                 animation: true,
                 percent: completionRate,
                 center: Text(
-                  "$percentage %",
+                  percentage == "NaN" ? "0.00 %" : "$percentage %",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
