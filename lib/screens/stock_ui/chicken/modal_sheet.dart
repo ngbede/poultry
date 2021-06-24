@@ -88,6 +88,7 @@ class BatchSheet extends StatelessWidget {
                           child: InputField(
                             keyboard: TextInputType.text,
                             fieldType: FieldType.batchName,
+                            name: "batch name",
                             maxlen: 15,
                             rightPadding: 0,
                             leftPadding: 50,
@@ -143,6 +144,7 @@ class BatchSheet extends StatelessWidget {
                           child: InputField(
                             keyboard: TextInputType.number,
                             fieldType: FieldType.batchQuantity,
+                            name: "quantity",
                             rightPadding: 0,
                             leftPadding: 50,
                             bottomPadding: 0,
