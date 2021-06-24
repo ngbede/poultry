@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/screens/order_ui/order_form.dart';
 import 'package:poultry/widgets/add_button.dart';
 
@@ -41,7 +42,9 @@ class OrderTabView extends StatelessWidget {
                 builder: (context, snapshot) {
                   List<Widget> farmOrders = [];
                   if (snapshot.hasData) {
-                    if (snapshot.data.data() == null) {
+                    // print("ME: ${snapshot.data.data()}");
+                    if (snapshot.data.data() == null ||
+                        snapshot.data.data().isEmpty) {
                       farmOrders.add(
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,27 +64,25 @@ class OrderTabView extends StatelessWidget {
                           ],
                         ),
                       );
+                      prefs.setInt("openOrders", 0);
                     } else {
                       final orderList = snapshot.data.data().values;
+                      int openOrders = 0;
                       for (var data in orderList) {
-                        // print(data);
+                        print(data);
                         if (orderStatus == OrderStatus.open
                             ? data["open"]
                             : !data["open"]) {
+                          openOrders += 1;
                           final bool open = data["open"];
                           final String name = data["name"];
                           final String address = data["address"];
                           final String contact = data["contact"];
-                          final String id = data["ID"];
+                          final String id = data["orderID"];
                           final String status = open ? "PENDING" : "DELIVERED";
                           final String date = data["date"];
-                          // ignore: unused_local_variable
-                          final int fertilizer = data["bagsOfFertilizer"];
-                          // ignore: unused_local_variable
-                          final int chickens = data["chickens"];
-                          // ignore: unused_local_variable
-                          final int eggCrates = data["cratesOfEggs"];
-                          final int productCount = data["products"];
+                          final Map products = data["products"];
+                          final int productCount = products.length;
                           farmOrders.add(
                             OrderCard(
                               status: status,
@@ -95,6 +96,7 @@ class OrderTabView extends StatelessWidget {
                           );
                         }
                       }
+                      prefs.setInt("openOrders", openOrders);
                     }
                   } else {
                     return CircularProgressIndicator(
