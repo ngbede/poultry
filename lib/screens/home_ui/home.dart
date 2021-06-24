@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:poultry/config/date.dart';
 import 'package:poultry/config/shared_pref.dart';
-//import 'package:intl/intl.dart';
-import 'package:poultry/providers/layout_index.dart';
-import 'package:provider/provider.dart';
+import 'package:poultry/widgets/quick_option_card.dart';
 
-// TODO: refactor home screen code
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   // final _formatCurrency = NumberFormat.simpleCurrency(name: "₦");
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final List<String> _cardTitles = [
-    //"Total Sales",
+    "Open Orders",
     "Total Chickens",
     "Eggs Collected"
   ];
+
   final List<String> _cardImages = [
-    //  "images/icons8-total-sales-100.png",
+    "images/icons8-total-sales-100.png",
     "images/icons8-chicken-100.png",
     "images/icons8-egg-100.png"
   ];
-  final List<dynamic> _cardValues = [
-    //  100000,
-    "423",
-    "30",
+
+  List<dynamic> _cardValues = [
+    prefs.getInt("openOrders"),
+    prefs.getInt("totalChickens"),
+    prefs.getInt("eggsCollected"),
   ];
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 20.0, top: 20),
@@ -117,7 +122,7 @@ class Home extends StatelessWidget {
                 );
               },
               loop: false,
-              itemCount: 2,
+              itemCount: 3,
               viewportFraction: 0.8,
               scale: 0.8,
               pagination: SwiperPagination(
@@ -156,85 +161,20 @@ class Home extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Provider.of<LayoutIndexProv>(context, listen: false)
-                            .onTapChangeScreen(1);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0XFFEFF4F5),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                          ),
-                        ),
-                        height: 200,
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              "images/icons8-farm-house-100.png",
-                              scale: 2.5,
-                              color: Colors.black,
-                            ),
-                            Text(
-                              "Stock Count",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text("Keep stock of items in your farm"),
-                          ],
-                        ),
-                      ),
-                    ),
+                  QuickOptionCard(
+                    navToScreen: 1,
+                    imagePath: "images/icons8-farm-house-100.png",
+                    title: "Stock Count",
+                    infoText: "Keep stock of goods in your farm",
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Provider.of<LayoutIndexProv>(context, listen: false)
-                            .onTapChangeScreen(2);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0XFFEFF4F5),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              10,
-                            ),
-                          ),
-                        ),
-                        height: 200,
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                              "images/icons8-truck-100.png",
-                              scale: 2.5,
-                              color: Colors.black,
-                            ),
-                            Text(
-                              "Open Orders",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text("Fulfill all open orders from distributors"),
-                          ],
-                        ),
-                      ),
-                    ),
+                  QuickOptionCard(
+                    navToScreen: 2,
+                    imagePath: "images/icons8-truck-100.png",
+                    title: "Open Orders",
+                    infoText: "Fulfill all open orders from distributors",
                   ),
                 ],
               ),

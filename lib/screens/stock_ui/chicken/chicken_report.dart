@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/providers/birds_prov.dart';
 import 'package:poultry/widgets/batch_card.dart';
 import 'package:poultry/screens/stock_ui/chicken/modal_sheet.dart';
@@ -79,6 +80,7 @@ class ChickenReport extends StatelessWidget {
                       final batchList = data.values;
                       final List<String> batchIDs = data.keys.toList();
                       int idx = 0;
+                      int totalBirds = 0;
                       for (var batch in batchList) {
                         final String batchName = batch["batchName"];
                         final String birdType = batch["birdType"];
@@ -86,6 +88,7 @@ class ChickenReport extends StatelessWidget {
                         final String startDate = batch["startDate"];
                         final String batchID = batchIDs[idx];
                         idx++;
+                        totalBirds += quantity;
                         chickenBatches.add(
                           BatchCard(
                             batchName: batchName,
@@ -111,6 +114,8 @@ class ChickenReport extends StatelessWidget {
                           ),
                         );
                       }
+                      prefs.setInt("totalChickens", totalBirds);
+                      print(totalBirds);
                     } else {
                       chickenBatches.add(
                         Column(

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
+import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/widgets/toast.dart';
 import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:poultry/providers/egg_prov.dart';
 import 'package:poultry/config/firebase.dart';
 
+// TODO: sort egg stock count by month of collection
 class EggReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,13 +30,12 @@ class EggReport extends StatelessWidget {
                 StockFields(
                   rowFields: [
                     Text(
-                      "Collection Date",
+                      "Date",
                       style: stockFieldTitleStyle,
                     ),
                     Text(
                       "${eggData.collectionDate}",
-                      style: TextStyle(
-                          color: Colors.amber, fontWeight: FontWeight.bold),
+                      style: stockFieldDateStyle,
                     ),
                   ],
                 ),
@@ -61,6 +62,7 @@ class EggReport extends StatelessWidget {
                       child: InputField(
                         keyboard: TextInputType.number,
                         fieldType: FieldType.eggsCollected,
+                        name: "eggs collected",
                         rightPadding: 0,
                         leftPadding: 50,
                         bottomPadding: 0,
@@ -110,6 +112,7 @@ class EggReport extends StatelessWidget {
                       child: InputField(
                         keyboard: TextInputType.number,
                         fieldType: FieldType.badEggs,
+                        name: "bad eggs",
                         rightPadding: 0,
                         leftPadding: 50,
                         bottomPadding: 0,
@@ -151,7 +154,6 @@ class EggReport extends StatelessWidget {
                                   await transaction.get(documentReference);
                               // check if user doc exist
                               if (snapshot.data() == null) {
-                                print('1');
                                 transaction.set(
                                   documentReference,
                                   {
@@ -163,12 +165,15 @@ class EggReport extends StatelessWidget {
                                     }
                                   },
                                 );
+                                prefs.setInt(
+                                  "eggsCollected",
+                                  eggData.totalEggs,
+                                );
                               }
                               // check if stock count has been done for the day
                               else if (!snapshot
                                   .data()
                                   .containsKey(formatDate())) {
-                                print('2');
                                 transaction.update(
                                   documentReference,
                                   {
@@ -180,10 +185,13 @@ class EggReport extends StatelessWidget {
                                     }
                                   },
                                 );
+                                prefs.setInt(
+                                  "eggsCollected",
+                                  eggData.totalEggs,
+                                );
                               }
                               // check if stock count for the day is done, then update values
                               else {
-                                print('3');
                                 int newTotalEggsCollected = snapshot
                                         .data()[formatDate()]["eggsCollected"] +
                                     eggData.totalEggs;
@@ -201,6 +209,10 @@ class EggReport extends StatelessWidget {
                                   "${formatDate()}.date":
                                       eggData.collectionDate,
                                 });
+                                prefs.setInt(
+                                  "eggsCollected",
+                                  newTotalEggsCollected,
+                                );
                               }
                             }).whenComplete(() async {
                               toaster("Stock count recorded");
@@ -232,7 +244,3 @@ class EggReport extends StatelessWidget {
     );
   }
 }
-
-// String monthStr = formatDate().substring(3, 5);
-//                             int month = int.parse(monthStr);
-//                             String formatMonth = months[month - 1];

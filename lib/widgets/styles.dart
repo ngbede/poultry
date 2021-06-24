@@ -23,3 +23,9 @@ TextStyle stockFieldTitleStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18,
 );
+
+TextStyle stockFieldDateStyle = TextStyle(
+  color: Colors.amber,
+  fontWeight: FontWeight.bold,
+  fontSize: 18,
+);
