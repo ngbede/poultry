@@ -22,12 +22,13 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OrderForm(),
-          ),
-        );
+        // TODO: Navigate to order confirmation screen
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => OrderForm(),
+        //   ),
+        // );
       },
       child: Padding(
         padding: const EdgeInsets.all(3.0),

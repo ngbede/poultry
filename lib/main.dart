@@ -29,7 +29,7 @@ void main() async {
   await auth.useEmulator(authHost);
   // get shared_prefs instance
   prefs = await SharedPreferences.getInstance();
-  //print(auth.currentUser);
+  print("User ID: ${auth.currentUser.uid}");
   runApp(
     MyApp(),
   );

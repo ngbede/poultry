@@ -203,6 +203,8 @@ class _FarmFormState extends State<FarmForm> {
                               listen: false,
                             ).farmName,
                           );
+                          prefs.setInt("totalChickens", 0);
+                          prefs.setInt("openOrders", 0);
                           _progress.dismiss();
                           Navigator.push(
                             context,
