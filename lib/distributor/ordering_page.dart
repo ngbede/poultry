@@ -223,6 +223,7 @@ class OrderingPage extends StatelessWidget {
                                           "productCount":
                                               products.length == 5 ? 2 : 1,
                                           "address": address,
+                                          "cancelled": false,
                                         },
                                       },
                                     ).whenComplete(() {
@@ -245,6 +246,7 @@ class OrderingPage extends StatelessWidget {
                                               products.length == 5 ? 2 : 1,
                                           "date": todaysDate,
                                           "address": address,
+                                          "cancelled": false,
                                         },
                                       },
                                     ).whenComplete(() {

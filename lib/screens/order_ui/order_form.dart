@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:poultry/config/date.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/id_gen.dart';
 import 'package:poultry/config/shared_pref.dart';
@@ -202,6 +201,7 @@ class OrderForm extends StatelessWidget {
                                 "cratesOfEggUnitPrice":
                                     prefs.getDouble("crateOfEggUnitPrice"),
                                 "totalPrice": orderData.totalPrice,
+                                "cancelled": false,
                               }
                             }
                           };
