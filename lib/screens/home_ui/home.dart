@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
                 ),
                 Expanded(
                   child: Text(
-                    "${prefs.getString("farmName")}",
+                    "Welcome, ${prefs.getString("name")}",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
