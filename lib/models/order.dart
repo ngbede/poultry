@@ -7,6 +7,12 @@ class Order {
   String customerName;
   String customerID;
   String customerAddress;
+  // farm attributes for distributor ordering
+  String farmOwner;
+  String farmName;
+  String farmContact;
+  String farmAddress;
+  String lga;
   OrderStatus status;
   Map<String, Map<String, int>> products;
   int productCount;
@@ -31,5 +37,10 @@ class Order {
     this.chickenUnitPrice = 0,
     this.crateOfEggUnitPrice = 0,
     this.totalPrice = 0,
+    this.farmOwner,
+    this.farmName,
+    this.farmAddress,
+    this.farmContact,
+    this.lga,
   });
 }

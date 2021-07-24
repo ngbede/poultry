@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/shared_pref.dart';
+import 'package:poultry/distributor/home.dart';
 import 'package:poultry/providers/layout_index.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/providers/user_prov.dart';
@@ -71,21 +73,48 @@ class Login extends StatelessWidget {
                                     .password,
                           );
                           if (_user != null) {
+                            var docSnapshot = await store
+                                .collection("users")
+                                .doc(_user.user.uid)
+                                .get();
+                            print(docSnapshot);
+                            String userRole = docSnapshot.data()["userRole"];
                             prefs.setString("userID", "${_user.user.uid}");
+                            prefs.setString("name", docSnapshot.data()["name"]);
+                            prefs.setString(
+                                "email", docSnapshot.data()["email"]);
+                            prefs.setString("phoneNumber",
+                                docSnapshot.data()["phoneNumber"]);
+                            prefs.setString(
+                                "address", docSnapshot.data()["address"]);
                             _progress.dismiss();
-                            Provider.of<LayoutIndexProv>(context, listen: false)
-                                .onTapChangeScreen(0);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Layout(),
-                              ),
-                            );
+                            if (userRole == "farmer") {
+                              Provider.of<LayoutIndexProv>(context,
+                                      listen: false)
+                                  .onTapChangeScreen(0);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Layout(),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DistributorHome(),
+                                ),
+                              );
+                            }
+
                             print("Sign in successful");
                           }
                         } on FirebaseAuthException catch (e) {
                           _progress.dismiss();
-                          toaster(e.code);
+                          toaster(
+                            e.code,
+                            ToastGravity.BOTTOM,
+                          );
                         }
                       }
                     },

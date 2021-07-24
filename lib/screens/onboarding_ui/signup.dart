@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/shared_pref.dart';
+import 'package:poultry/distributor/home.dart';
 import 'package:poultry/screens/layout.dart';
 import 'package:poultry/screens/onboarding_ui/farmform.dart';
 import 'package:poultry/screens/onboarding_ui/login.dart';
@@ -49,11 +51,6 @@ class Signup extends StatelessWidget {
                     fieldType: FieldType.name,
                     //onSaved: ,
                   ),
-                  // InputField(
-                  //   name: "Last name",
-                  //   keyboard: TextInputType.text,
-                  //   fieldType: FieldType.lastName,
-                  // ),
                   InputField(
                     name: "Email address",
                     keyboard: TextInputType.emailAddress,
@@ -132,19 +129,38 @@ class Signup extends StatelessWidget {
                                 ).phoneNumber,
                               },
                             );
+                            if (Provider.of<UserProv>(context, listen: false)
+                                    .role ==
+                                UserType.farmer) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FarmForm(),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DistributorHome(),
+                                ),
+                              );
+                            }
                             prefs.setString("userID", "${_user.user.uid}");
-                            _progress.dismiss();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FarmForm(),
-                              ),
+                            prefs.setString(
+                              "name",
+                              Provider.of<UserProv>(
+                                context,
+                                listen: false,
+                              ).name,
                             );
+                            _progress.dismiss();
+
                             print("Signup successful");
                           }
                         } on FirebaseAuthException catch (e) {
                           _progress.dismiss();
-                          toaster(e.code);
+                          toaster(e.code, ToastGravity.BOTTOM);
                         }
                       }
                     },

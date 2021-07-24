@@ -214,7 +214,10 @@ class _FarmFormState extends State<FarmForm> {
                           );
                         } catch (e) {
                           _progress.dismiss();
-                          toaster(e.code);
+                          toaster(
+                            e.code,
+                            ToastGravity.BOTTOM,
+                          );
                         }
                       }
                     },
