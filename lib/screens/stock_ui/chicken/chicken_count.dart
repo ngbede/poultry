@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
@@ -191,7 +192,9 @@ class ChickenCount extends StatelessWidget {
                                     birdData.setDeadBirds(0);
                                     birdData.setComment("");
                                     toaster(
-                                        "Stock count recorded successfully");
+                                      "Stock count recorded successfully",
+                                      ToastGravity.BOTTOM,
+                                    );
                                     Navigator.pop(context);
                                   });
                                 } else {
@@ -212,7 +215,9 @@ class ChickenCount extends StatelessWidget {
                                     birdData.setDeadBirds(0);
                                     birdData.setComment("");
                                     toaster(
-                                        "Stock count recorded successfully");
+                                      "Stock count recorded successfully",
+                                      ToastGravity.BOTTOM,
+                                    );
                                     Navigator.pop(context);
                                   });
                                 }

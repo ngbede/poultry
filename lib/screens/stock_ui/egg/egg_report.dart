@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poultry/config/date.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/shared_pref.dart';
@@ -215,7 +216,8 @@ class EggReport extends StatelessWidget {
                                 );
                               }
                             }).whenComplete(() async {
-                              toaster("Stock count recorded");
+                              toaster(
+                                  "Stock count recorded", ToastGravity.BOTTOM);
                               await Future.delayed(
                                 Duration(seconds: 1),
                               );
