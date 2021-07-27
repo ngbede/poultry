@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:poultry/config/date.dart';
 import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/widgets/quick_option_card.dart';
 

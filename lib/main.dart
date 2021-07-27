@@ -16,6 +16,8 @@ import 'package:poultry/widgets/scroll_behaviour.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:path/path.dart';
+// import 'package:excel/excel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +31,7 @@ void main() async {
   await auth.useEmulator(authHost);
   // get shared_prefs instance
   prefs = await SharedPreferences.getInstance();
-  print("User ID: ${auth.currentUser.uid}");
+  //print("User ID: ${auth.currentUser.uid}");
   runApp(
     MyApp(),
   );

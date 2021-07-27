@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:poultry/config/date.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/id_gen.dart';
 import 'package:poultry/config/shared_pref.dart';
@@ -9,6 +11,7 @@ import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/inputfield.dart';
 import 'package:poultry/widgets/product_picker.dart';
 import 'package:poultry/widgets/styles.dart';
+import 'package:poultry/widgets/toast.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/enumvals.dart';
@@ -178,34 +181,45 @@ class OrderForm extends StatelessWidget {
                               .collection("orders")
                               .doc(auth.currentUser.uid);
                           String orderID = generateID();
-                          Map productData = {};
+                          DocumentSnapshot myOrders = await docRef.get();
+                          Map products = {};
+                          if (orderData.cratesOfEggsCount > 0) {
+                            products["crateOfEggQty"] =
+                                orderData.cratesOfEggsCount;
+                            products["crateOfEggUnitPrice"] =
+                                prefs.getDouble("crateOfEggUnitPrice");
+                          }
                           if (orderData.chickenCount > 0) {
-                            productData["chickenQty"] = orderData.chickenCount;
-                            productData["chickenUnitPrice"] =
+                            products["chickenQty"] = orderData.chickenCount;
+                            products["chickenUnitPrice"] =
                                 prefs.getDouble("chickenUnitPrice");
                           }
-                          //if ()
+                          products["totalPrice"] = orderData.totalPrice;
                           var data = {
                             orderID: {
                               "name": orderData.customeName,
                               "address": orderData.customerAddress,
                               "contact": orderData.customerContact,
-                              "date": orderData.orderDate,
+                              "date": todaysDate,
                               "open": true,
                               "orderID": orderID,
-                              "products": {
-                                "chickenQty": orderData.chickenCount,
-                                "crateOfEggQty": orderData.cratesOfEggsCount,
-                                "chickenUnitPrice":
-                                    prefs.getDouble("chickenUnitPrice"),
-                                "cratesOfEggUnitPrice":
-                                    prefs.getDouble("crateOfEggUnitPrice"),
-                                "totalPrice": orderData.totalPrice,
-                                "cancelled": false,
-                              }
+                              "cancelled": false,
+                              "productCount": products.length == 5 ? 2 : 1,
+                              "products": products,
                             }
                           };
-                          await docRef.set(data);
+                          if (myOrders == null) {
+                            await docRef.set(data).whenComplete(() {
+                              toaster("Order Created", ToastGravity.BOTTOM);
+                              Navigator.pop(context);
+                            });
+                          } else {
+                            await docRef.update(data).whenComplete(() {
+                              toaster("Order Created", ToastGravity.BOTTOM);
+                              Navigator.pop(context);
+                            });
+                          }
+
                           print(data);
                         }
                       },

@@ -29,3 +29,13 @@ TextStyle stockFieldDateStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18,
 );
+
+TextStyle orderSummaryField = TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 15.5,
+);
+
+TextStyle orderHeader = TextStyle(
+  fontWeight: FontWeight.w400,
+  fontSize: 17,
+);

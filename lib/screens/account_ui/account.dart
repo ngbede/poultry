@@ -30,11 +30,11 @@ class Account extends StatelessWidget {
           hintText: "Edit account details",
           icon: FluentIcons.settings_20_regular,
         ),
-        AccountCard(
-          title: "Customers",
-          hintText: "Store customer information",
-          icon: FluentIcons.person_add_20_regular,
-        ),
+        // AccountCard(
+        //   title: "Customers",
+        //   hintText: "Store customer information",
+        //   icon: FluentIcons.person_add_20_regular,
+        // ),
         AccountCard(
           title: "Sign Out",
           hintText: "Log off from your account",

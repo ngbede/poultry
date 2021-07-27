@@ -28,9 +28,11 @@ class Orders extends StatelessWidget {
           children: [
             OrderTabView(
               orderStatus: OrderStatus.open,
+              user: UserType.farmer,
             ),
             OrderTabView(
               orderStatus: OrderStatus.closed,
+              user: UserType.farmer,
             ),
           ],
         ),

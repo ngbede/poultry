@@ -7,7 +7,6 @@ import 'package:poultry/widgets/batch_card.dart';
 import 'package:poultry/screens/stock_ui/chicken/modal_sheet.dart';
 import 'package:poultry/widgets/add_button.dart';
 import 'package:provider/provider.dart';
-
 import 'chicken_count.dart';
 
 class ChickenReport extends StatelessWidget {

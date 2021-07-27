@@ -135,6 +135,7 @@ class ChickenCount extends StatelessWidget {
                           leftPadding: 50,
                           bottomPadding: 0,
                           topPadding: 5,
+                          maxLine: 3,
                         ),
                       ),
                     ],

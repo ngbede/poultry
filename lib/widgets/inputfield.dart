@@ -25,6 +25,7 @@ class InputField extends StatefulWidget {
   final double rightPadding;
   final double topPadding;
   final double bottomPadding;
+  final int maxLine;
   InputField({
     this.name,
     @required this.keyboard,
@@ -38,6 +39,7 @@ class InputField extends StatefulWidget {
     this.bottomPadding = 20.0,
     this.topPadding = 5.0,
     this.fontSize,
+    this.maxLine = 1,
   });
 
   @override
@@ -204,6 +206,7 @@ class _InputFieldState extends State<InputField> {
               }
             },
             maxLength: widget.maxlen,
+            maxLines: widget.maxLine,
             obscureText: widget.iconVisible ? _hidePassword : false,
             keyboardType: widget.keyboard,
             cursorColor: widget.fieldType == FieldType.badEggs

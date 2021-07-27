@@ -78,6 +78,7 @@ class Login extends StatelessWidget {
                                 .doc(_user.user.uid)
                                 .get();
                             print(docSnapshot);
+                            // Add checks for null values
                             String userRole = docSnapshot.data()["userRole"];
                             prefs.setString("userID", "${_user.user.uid}");
                             prefs.setString("name", docSnapshot.data()["name"]);

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/shared_pref.dart';
+import 'package:poultry/distributor/ordering_page.dart';
 import 'package:poultry/screens/order_ui/order_form.dart';
 import 'package:poultry/widgets/add_button.dart';
 
@@ -10,30 +11,45 @@ import '../../widgets/orders_card.dart';
 
 class OrderTabView extends StatelessWidget {
   final OrderStatus orderStatus;
-  OrderTabView({@required this.orderStatus});
+  final String buttonText;
+  final UserType user;
+  OrderTabView({
+    @required this.orderStatus,
+    @required this.user,
+    this.buttonText = "Add order",
+  });
   @override
   Widget build(BuildContext context) {
     return auth.currentUser != null
         ? Column(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: AddButton(
-                    title: "Add order",
-                    function: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OrderForm(),
+              orderStatus == OrderStatus.closed
+                  ? SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: AddButton(
+                          title: "$buttonText",
+                          function: () {
+                            user == UserType.farmer
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OrderForm(),
+                                    ),
+                                  )
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => OrderingPage(),
+                                    ),
+                                  );
+                            print("Navigate to order form field");
+                          },
                         ),
-                      );
-                      print("Navigate to order form field");
-                    },
-                  ),
-                ),
-              ),
+                      ),
+                    ),
               StreamBuilder<DocumentSnapshot<Map>>(
                 stream: store
                     .collection("orders")
@@ -82,7 +98,9 @@ class OrderTabView extends StatelessWidget {
                           final String status = open ? "PENDING" : "DELIVERED";
                           final String date = data["date"];
                           final Map products = data["products"];
-                          final int productCount = products.length;
+                          final int productCount = data["productCount"];
+                          final bool cancelled = data["cancelled"];
+                          print(products);
                           farmOrders.add(
                             OrderCard(
                               status: status,
@@ -92,6 +110,13 @@ class OrderTabView extends StatelessWidget {
                               address: address,
                               date: date,
                               id: id,
+                              totalPrice: products["totalPrice"],
+                              crateOfEggQty: products["crateOfEggQty"],
+                              crateOfEggUnitPrice:
+                                  products["crateOfEggUnitPrice"],
+                              chickenQty: products["chickenQty"],
+                              chickenUnitPrice: products["chickenUnitPrice"],
+                              cancelled: cancelled,
                             ),
                           );
                         }

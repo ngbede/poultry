@@ -20,7 +20,7 @@ class PickProduct extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.only(
-              left: 20,
+              left: 10,
               bottom: 10,
             ),
             child: Text(
