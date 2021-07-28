@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/shared_pref.dart';
+import 'package:poultry/distributor/home.dart';
 import 'package:poultry/providers/data_prov.dart';
 import 'package:poultry/providers/order_prov.dart';
 import 'package:poultry/providers/price_prov.dart';
@@ -79,7 +80,11 @@ class MyApp extends StatelessWidget {
           // primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: prefs.getString("userID") == null ? Login() : Layout(),
+        home: prefs.getString("userID") == null
+            ? Login()
+            : prefs.getString("role") == "farmer"
+                ? Layout()
+                : DistributorHome(),
       ),
     );
   }
