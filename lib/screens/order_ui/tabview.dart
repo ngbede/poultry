@@ -5,6 +5,7 @@ import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/distributor/ordering_page.dart';
 import 'package:poultry/screens/order_ui/order_form.dart';
 import 'package:poultry/widgets/add_button.dart';
+import 'package:poultry/widgets/user_role_button.dart';
 
 import '../../config/firebase.dart';
 import '../../widgets/orders_card.dart';
@@ -103,6 +104,7 @@ class OrderTabView extends StatelessWidget {
                           print(products);
                           farmOrders.add(
                             OrderCard(
+                              userRole: UserType.farmer,
                               status: status,
                               name: name,
                               productCount: productCount,

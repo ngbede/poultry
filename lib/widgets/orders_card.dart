@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/widgets/action_button.dart';
 import 'package:poultry/widgets/styles.dart';
@@ -19,6 +20,7 @@ class OrderCard extends StatelessWidget {
   final double chickenUnitPrice;
   final double crateOfEggUnitPrice;
   final double totalPrice;
+  final UserType userRole;
   OrderCard({
     @required this.status,
     @required this.name,
@@ -28,6 +30,7 @@ class OrderCard extends StatelessWidget {
     @required this.date,
     @required this.id,
     @required this.cancelled,
+    @required this.userRole,
     this.crateOfEggQty,
     this.chickenQty,
     this.chickenUnitPrice,
@@ -155,7 +158,7 @@ class OrderCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    status == "PENDING"
+                    status == "PENDING" && userRole == UserType.farmer
                         ? Row(
                             children: [
                               Expanded(
