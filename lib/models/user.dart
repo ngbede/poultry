@@ -5,15 +5,17 @@ class User {
 
   String email;
   String phoneNumber;
-  UserType role = UserType.distributor;
+  UserType role;
   String password;
+  String address;
 
   User({
     this.name,
     this.email,
     this.phoneNumber,
-    this.role,
+    this.role = UserType.distributor,
     this.password,
+    this.address,
   });
 
   @override

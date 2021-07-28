@@ -24,6 +24,11 @@ class UserProv with ChangeNotifier {
     notifyListeners();
   }
 
+  void setAddress(String address) {
+    _user.address = address;
+    notifyListeners();
+  }
+
   void setUserRole(UserType role) {
     _user.role = role;
     notifyListeners();
@@ -34,6 +39,7 @@ class UserProv with ChangeNotifier {
   String get phoneNumber => _user.phoneNumber;
   UserType get role => _user.role;
   String get password => _user.password;
+  String get address => _user.address;
 
   void getInfo() {
     print(_user.toString());

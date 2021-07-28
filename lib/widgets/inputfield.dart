@@ -112,14 +112,14 @@ class _InputFieldState extends State<InputField> {
               } else if (FieldType.phone == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setPhoneNumber(value);
+              } else if (FieldType.address == widget.fieldType) {
+                Provider.of<UserProv>(context, listen: false).setAddress(value);
               } else if (FieldType.password == widget.fieldType) {
                 Provider.of<UserProv>(context, listen: false)
                     .setPassword(value);
               } else if (FieldType.farmName == widget.fieldType) {
                 Provider.of<FarmProv>(context, listen: false)
                     .serFarmName(value);
-              } else if (FieldType.address == widget.fieldType) {
-                Provider.of<FarmProv>(context, listen: false).setAddress(value);
               } else if (FieldType.numberOfBroilers == widget.fieldType) {
                 Provider.of<FarmProv>(context, listen: false).setBroilerCount(
                   value,

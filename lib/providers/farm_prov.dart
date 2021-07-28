@@ -9,11 +9,6 @@ class FarmProv with ChangeNotifier {
     notifyListeners();
   }
 
-  void setAddress(String address) {
-    _farm.address = address;
-    notifyListeners();
-  }
-
   void setState(String state) {
     _farm.state = state;
     notifyListeners();
@@ -45,7 +40,6 @@ class FarmProv with ChangeNotifier {
   }
 
   String get farmName => _farm.farmName;
-  String get address => _farm.address;
   String get state => _farm.state;
   String get lga => _farm.lga;
   String get layersCount => _farm.numberOfLayers;
