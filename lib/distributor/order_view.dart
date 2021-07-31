@@ -4,7 +4,6 @@ import 'package:poultry/config/enumvals.dart';
 import 'package:poultry/config/firebase.dart';
 import 'package:poultry/config/shared_pref.dart';
 import 'package:poultry/distributor/ordering_page.dart';
-import 'package:poultry/screens/order_ui/tabview.dart';
 import 'package:poultry/widgets/add_button.dart';
 import 'package:poultry/widgets/orders_card.dart';
 
@@ -72,7 +71,7 @@ class OrderView extends StatelessWidget {
                             totalPrice: products["totalPrice"],
                             crateOfEggQty: products["crateOfEggQty"],
                             crateOfEggUnitPrice:
-                                products["CrateOfEggUnitPrice"],
+                                products["crateOfEggUnitPrice"],
                             chickenQty: products["chickenQty"],
                             chickenUnitPrice: products["chickenUnitPrice"],
                           ),
