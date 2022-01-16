@@ -14,3 +14,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+### Screenshots of the app
+
+![orders ui](https://github.com/ngbede/poultry/blob/master/images/order.png?raw=false)
+![delivered ui](https://github.com/ngbede/poultry/blob/master/images/delivered.png?raw=false)
+![stock overview ui](https://github.com/ngbede/poultry/blob/master/images/stock.png?raw=false)
+![stock count ui](https://github.com/ngbede/poultry/blob/master/images/stock_count.png?raw=false)
+
