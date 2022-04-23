@@ -25,11 +25,11 @@ void main() async {
   await Firebase.initializeApp();
   // The below lines are only useful for local dev purposes
   // Comment them out when using production backend
-  store.settings = Settings(
-    host: storeHost,
-    sslEnabled: false,
-  );
-  await auth.useEmulator(authHost);
+  // store.settings = Settings(
+  //   host: storeHost,
+  //   sslEnabled: false,
+  // );
+  // await auth.useEmulator(authHost);
   // get shared_prefs instance
   prefs = await SharedPreferences.getInstance();
   //print("User ID: ${auth.currentUser.uid}");

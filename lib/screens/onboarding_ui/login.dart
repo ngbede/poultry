@@ -71,6 +71,7 @@ class Login extends StatelessWidget {
                                 email: user.email,
                                 password: user.password,
                               );
+                              print(_user);
                               if (_user != null) {
                                 var docSnapshot = await store
                                     .collection("users")
